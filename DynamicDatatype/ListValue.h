@@ -1,7 +1,6 @@
 #pragma once
 #include "Variable.h"
 #include <vector>
-class ListValue;
 
 class Variable;
 
