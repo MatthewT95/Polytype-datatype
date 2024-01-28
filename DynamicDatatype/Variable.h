@@ -5,6 +5,7 @@
 #include "StringValue.h"
 #include "BooleanValue.h"
 #include "ListValue.h"
+#include "DictionarlyValue.h"
 #include <vector>
 
 class Variable
@@ -32,6 +33,8 @@ public:
 	void setBoolean(bool value);
 	void makeList();
 	void makeList(Datatypes dt);
+	void makeDictionarly();
+	void makeDictionarly(Datatypes dt);
 	void makeNone();
 
 	// List
@@ -43,6 +46,8 @@ public:
 	unsigned int getElementsCount();
 	void clearElements();
 	void makeElementList(unsigned int index);
+
+	// Dictionarly
 
 	Datatypes getDatatype();
 	void lock();

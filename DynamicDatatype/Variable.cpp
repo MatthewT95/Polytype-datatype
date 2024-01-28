@@ -264,6 +264,38 @@ void Variable::makeNone()
 	m_elementTypeLocked = false;
 }
 
+void Variable::makeDictionarly()
+{
+	if (m_typeLocked == false || m_datatype == Datatypes::Dictionarly)
+	{
+		delete m_value;
+		m_value = new DictionarlyValue();
+		m_datatype = Datatypes::List;
+		m_elementDatatype = Datatypes::None;
+		m_elementTypeLocked = false;
+	}
+	else
+	{
+		throw std::logic_error("Variable is type locked to a non List datatype.");
+	}
+}
+
+void Variable::makeDictionarly(Datatypes dt)
+{
+	if (m_typeLocked == false || m_datatype == Datatypes::Dictionarly)
+	{
+		delete m_value;
+		m_value = new DictionarlyValue();
+		m_datatype = Datatypes::List;
+		m_elementDatatype = dt;
+		m_elementTypeLocked = true;
+	}
+	else
+	{
+		throw std::logic_error("Variable is type locked to a non List datatype.");
+	}
+}
+
 void Variable::appendElement(Variable value)
 {
 	if (m_datatype == Datatypes::List)
