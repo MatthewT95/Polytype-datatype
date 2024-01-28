@@ -39,7 +39,6 @@ public:
 
 	// List
 	void appendElement(Variable value);
-	void appendNewList();
 	Variable& getElement(unsigned int index);
 	Variable getElementCopy(unsigned int index) const;
 	void setElement(unsigned int index, Variable value);
@@ -60,6 +59,9 @@ public:
 	void unlock();
 
 	static std::string datatypeName(Datatypes dt);
+
+	static Variable createList();
+	static Variable createList(Datatypes dt, bool locked = false);
 private:
 	VariableValue* m_value;
 	Datatypes m_datatype;

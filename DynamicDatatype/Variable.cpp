@@ -334,29 +334,6 @@ void Variable::appendElement(Variable value)
 	}
 }
 
-void Variable::appendNewList()
-{
-	if (m_datatype == Datatypes::List)
-	{
-		if (m_elementTypeLocked == false || Datatypes::List == m_elementDatatype)
-		{
-			((ListValue*)m_value)->appendNewList();
-			if (m_elementTypeLocked)
-			{
-				((ListValue*)m_value)->getElement(((ListValue*)m_value)->size() - 1).lock();
-			}
-		}
-		else
-		{
-			throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
-		}
-	}
-	else
-	{
-		throw std::logic_error("Variable is not of type List");
-	}
-}
-
 Variable& Variable::getElement(unsigned int index)
 {
 	if (m_datatype == Datatypes::List)
@@ -387,7 +364,15 @@ void Variable::setElement(unsigned int index, Variable value)
 	{
 		if (m_elementTypeLocked == false || value.getDatatype() == m_elementDatatype)
 		{
-			value.lock();
+			if (getElement(index).m_typeLocked == true)
+			{
+				throw std::logic_error("Variable in list at index " + std::to_string(index) + " is type locked to " +
+					datatypeName(getElement(index).getDatatype()));
+			}
+			if (m_elementTypeLocked)
+			{
+				value.lock();
+			}
 			((ListValue*)m_value)->setElement(index, value);
 		}
 		else
@@ -564,4 +549,22 @@ std::string Variable::datatypeName(Datatypes dt)
 	}
 
 	return "";
+}
+
+Variable Variable::createList()
+{
+	Variable a;
+	a.makeList();
+	return a;
+}
+
+Variable Variable::createList(Datatypes dt, bool locked)
+{
+	Variable a;
+	a.makeList(dt);
+	if (locked)
+	{
+		a.lock();
+	}
+	return a;
 }

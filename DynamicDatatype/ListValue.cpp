@@ -30,13 +30,6 @@ void ListValue::append(const Variable &value)
 	m_values.push_back(value);
 }
 
-void ListValue::appendNewList()
-{
-	Variable value;
-	value.makeList();
-	m_values.push_back(value);
-}
-
 void ListValue::remove(unsigned int index)
 {
 	m_values.erase(m_values.begin()+index);

@@ -14,7 +14,6 @@ public:
 	Variable& getElement(unsigned int index);
 	void setElement(unsigned int index,Variable value);
 	void append(const Variable &value);
-	void appendNewList();
 	void remove(unsigned int index);
 	void empty();
 	void makeElementList(unsigned int index);
