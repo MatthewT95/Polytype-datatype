@@ -1,6 +1,7 @@
 #pragma once
 #include "Variable.h"
 #include <map>
+#include <vector>
 
 class Variable;
 
@@ -16,6 +17,7 @@ public:
 	void setValue(std::string key, Variable value);
 	void removeKey(std::string key);
 	void empty();
+	std::vector<std::string> getKeys();
 
 	unsigned int size();
 

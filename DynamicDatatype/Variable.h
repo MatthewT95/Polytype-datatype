@@ -41,6 +41,7 @@ public:
 	void appendElement(Variable value);
 	void appendNewList();
 	Variable& getElement(unsigned int index);
+	Variable getElementCopy(unsigned int index) const;
 	void setElement(unsigned int index, Variable value);
 	void removeElement(unsigned int index);
 	unsigned int getElementsCount();
@@ -48,6 +49,11 @@ public:
 	void makeElementList(unsigned int index);
 
 	// Dictionarly
+	bool keyExists(std::string key);
+	Variable& getDictionarlyElement(std::string key);
+	void setDictionarlyElement(std::string key, Variable value);
+	void removeDictionarlyKey(std::string key);
+	void clearDictionarlyKeys();
 
 	Datatypes getDatatype();
 	void lock();
