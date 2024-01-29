@@ -129,7 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BooleanValue.cpp" />
-    <ClCompile Include="DictionarlyValue.cpp" />
+    <ClCompile Include="DictionaryValue.cpp" />
     <ClCompile Include="FloatValue.cpp" />
     <ClCompile Include="ListValue.cpp" />
     <ClCompile Include="StringValue.cpp" />
@@ -141,7 +141,7 @@
   <ItemGroup>
     <ClInclude Include="BooleanValue.h" />
     <ClInclude Include="Datatypes.h" />
-    <ClInclude Include="DictionarlyValue.h" />
+    <ClInclude Include="DictionaryValue.h" />
     <ClInclude Include="FloatValue.h" />
     <ClInclude Include="ListValue.h" />
     <ClInclude Include="StringValue.h" />

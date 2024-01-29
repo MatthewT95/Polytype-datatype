@@ -6,6 +6,6 @@ enum class Datatypes
 	String,
 	Boolean,
 	List,
-	Dictionarly,
+	Dictionary,
 	None
 };

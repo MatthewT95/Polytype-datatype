@@ -43,14 +43,14 @@ Variable::Variable(const Variable& src)
 			((ListValue*)m_value)->append(src.getElementCopy(i));
 		}
 	}
-	else if (src.m_datatype == Datatypes::Dictionarly)
+	else if (src.m_datatype == Datatypes::Dictionary)
 	{
-		m_datatype = Datatypes::Dictionarly;
-		m_value = new DictionarlyValue();
+		m_datatype = Datatypes::Dictionary;
+		m_value = new DictionaryValue();
 
-		for (std::string key : ((DictionarlyValue*)src.m_value)->getKeys())
+		for (std::string key : ((DictionaryValue*)src.m_value)->getKeys())
 		{
-			this->setDictionarlyElement(key,((DictionarlyValue*)src.m_value)->getValue(key));
+			this->setDictionarlyElement(key,((DictionaryValue*)src.m_value)->getValue(key));
 		}
 	}
 	else
@@ -281,11 +281,11 @@ void Variable::makeNone()
 
 void Variable::makeDictionarly()
 {
-	if (m_typeLocked == false || m_datatype == Datatypes::Dictionarly)
+	if (m_typeLocked == false || m_datatype == Datatypes::Dictionary)
 	{
 		delete m_value;
-		m_value = new DictionarlyValue();
-		m_datatype = Datatypes::Dictionarly;
+		m_value = new DictionaryValue();
+		m_datatype = Datatypes::Dictionary;
 		m_elementDatatype = Datatypes::None;
 		m_elementTypeLocked = false;
 	}
@@ -297,11 +297,11 @@ void Variable::makeDictionarly()
 
 void Variable::makeDictionarly(Datatypes dt)
 {
-	if (m_typeLocked == false || m_datatype == Datatypes::Dictionarly)
+	if (m_typeLocked == false || m_datatype == Datatypes::Dictionary)
 	{
 		delete m_value;
-		m_value = new DictionarlyValue();
-		m_datatype = Datatypes::Dictionarly;
+		m_value = new DictionaryValue();
+		m_datatype = Datatypes::Dictionary;
 		m_elementDatatype = dt;
 		m_elementTypeLocked = true;
 	}
@@ -436,9 +436,9 @@ void Variable::makeElementList(unsigned int index)
 
 bool Variable::keyExists(std::string key)
 {
-	if (m_datatype == Datatypes::Dictionarly)
+	if (m_datatype == Datatypes::Dictionary)
 	{
-		return ((DictionarlyValue*)m_value)->keyExists(key);
+		return ((DictionaryValue*)m_value)->keyExists(key);
 	}
 	else
 	{
@@ -448,9 +448,9 @@ bool Variable::keyExists(std::string key)
 
 Variable& Variable::getDictionarlyElement(std::string key)
 {
-	if (m_datatype == Datatypes::Dictionarly)
+	if (m_datatype == Datatypes::Dictionary)
 	{
-		return ((DictionarlyValue*)m_value)->getValue(key);
+		return ((DictionaryValue*)m_value)->getValue(key);
 	}
 	else
 	{
@@ -460,12 +460,12 @@ Variable& Variable::getDictionarlyElement(std::string key)
 
 void Variable::setDictionarlyElement(std::string key, Variable value)
 {
-	if (m_datatype == Datatypes::Dictionarly)
+	if (m_datatype == Datatypes::Dictionary)
 	{
 		if (m_elementTypeLocked == false || value.getDatatype() == m_elementDatatype)
 		{
 			value.lock();
-			((DictionarlyValue*)m_value)->setValue(key, value);
+			((DictionaryValue*)m_value)->setValue(key, value);
 		}
 		else
 		{
@@ -480,9 +480,9 @@ void Variable::setDictionarlyElement(std::string key, Variable value)
 
 void Variable::removeDictionarlyKey(std::string key)
 {
-	if (m_datatype == Datatypes::Dictionarly)
+	if (m_datatype == Datatypes::Dictionary)
 	{
-		((DictionarlyValue*)m_value)->removeKey(key);
+		((DictionaryValue*)m_value)->removeKey(key);
 	}
 	else
 	{
@@ -492,9 +492,9 @@ void Variable::removeDictionarlyKey(std::string key)
 
 void Variable::clearDictionarlyKeys()
 {
-	if (m_datatype == Datatypes::Dictionarly)
+	if (m_datatype == Datatypes::Dictionary)
 	{
-		((DictionarlyValue*)m_value)->empty();
+		((DictionaryValue*)m_value)->empty();
 	}
 	else
 	{
@@ -539,9 +539,9 @@ std::string Variable::datatypeName(Datatypes dt)
 	{
 		return "List";
 	}
-	else if (dt == Datatypes::Dictionarly)
+	else if (dt == Datatypes::Dictionary)
 	{
-		return "Dictionarly";
+		return "Dictionary";
 	}
 	else if (dt == Datatypes::None)
 	{
@@ -562,6 +562,24 @@ Variable Variable::createList(Datatypes dt, bool locked)
 {
 	Variable a;
 	a.makeList(dt);
+	if (locked)
+	{
+		a.lock();
+	}
+	return a;
+}
+
+Variable Variable::createDictionarly()
+{
+	Variable a;
+	a.makeDictionarly();
+	return a;
+}
+
+Variable Variable::createDictionarly(Datatypes dt, bool locked)
+{
+	Variable a;
+	a.makeDictionarly(dt);
 	if (locked)
 	{
 		a.lock();

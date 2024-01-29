@@ -5,7 +5,7 @@
 #include "StringValue.h"
 #include "BooleanValue.h"
 #include "ListValue.h"
-#include "DictionarlyValue.h"
+#include "DictionaryValue.h"
 #include <vector>
 
 class Variable
@@ -62,6 +62,8 @@ public:
 
 	static Variable createList();
 	static Variable createList(Datatypes dt, bool locked = false);
+	static Variable createDictionarly();
+	static Variable createDictionarly(Datatypes dt, bool locked = false);
 private:
 	VariableValue* m_value;
 	Datatypes m_datatype;

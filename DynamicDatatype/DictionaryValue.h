@@ -5,12 +5,12 @@
 
 class Variable;
 
-class DictionarlyValue : public VariableValue
+class DictionaryValue : public VariableValue
 {
 public:
-	DictionarlyValue();
-	DictionarlyValue(const DictionarlyValue& src);
-	~DictionarlyValue();
+	DictionaryValue();
+	DictionaryValue(const DictionaryValue& src);
+	~DictionaryValue();
 
 	bool keyExists(std::string key);
 	Variable& getValue(std::string key);

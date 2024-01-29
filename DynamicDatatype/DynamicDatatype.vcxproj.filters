@@ -39,7 +39,7 @@
     <ClCompile Include="ListValue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DictionarlyValue.cpp">
+    <ClCompile Include="DictionaryValue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,7 +68,7 @@
     <ClInclude Include="ListValue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DictionarlyValue.h">
+    <ClInclude Include="DictionaryValue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
