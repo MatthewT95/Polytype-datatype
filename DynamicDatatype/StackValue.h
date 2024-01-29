@@ -17,6 +17,6 @@ public:
 	bool isEmpty();
 
 private:
-	std::stack<Variable> m_valueStack;
+	//std::stack<Variable> m_valueStack;
 };
 

@@ -2,12 +2,12 @@
 
 StackValue::StackValue()
 {
-	m_valueStack = std::stack<Variable>();
+	//m_valueStack = std::stack<Variable>();
 }
 
 StackValue::StackValue(const StackValue& src)
 {
-	m_valueStack = src.m_valueStack;
+	//m_valueStack = src.m_valueStack;
 }
 
 StackValue::~StackValue()
@@ -17,22 +17,25 @@ StackValue::~StackValue()
 
 void StackValue::push(Variable value)
 {
-	m_valueStack.push(value);
+	//m_valueStack.push(value);
 }
 
 Variable StackValue::pop()
 {
-	Variable top = m_valueStack.top();
-	m_valueStack.pop();
-	return top;
+	//Variable top = m_valueStack.top();
+	//m_valueStack.pop();
+	//return top;
+	return Variable();
 }
 
 unsigned int StackValue::size()
 {
-	return m_valueStack.size();
+	//return m_valueStack.size();
+	return 0;
 }
 
 bool StackValue::isEmpty()
 {
-	return m_valueStack.empty();
+	//return m_valueStack.empty();
+	return true;
 }
