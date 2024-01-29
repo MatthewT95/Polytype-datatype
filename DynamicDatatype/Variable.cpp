@@ -287,6 +287,25 @@ void Variable::makeNone()
 	m_elementTypeLocked = false;
 }
 
+void Variable::makeError()
+{
+	// Guards against using changeing datatype of variable if it is type locked
+	if (m_lockMode > 0 && m_datatype != Datatypes::Error)
+	{
+		throw std::logic_error("Variable is type locked to a non None datatype.");
+	}
+	// Guards against using changeing value of variable if it is value locked
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	delete m_value;
+	m_value = nullptr;
+	m_datatype = Datatypes::Error;
+	m_elementDatatype = Datatypes::None;
+	m_elementTypeLocked = false;
+}
+
 void Variable::makeDictionarly()
 {
 	// Guards against using changeing datatype of variable if it is type locked
@@ -650,6 +669,10 @@ std::string Variable::datatypeName(Datatypes dt)
 	{
 		return "Dictionary";
 	}
+	else if (dt == Datatypes::Error)
+	{
+		return "Error";
+	}
 	else if (dt == Datatypes::None)
 	{
 		return "None";
@@ -766,4 +789,84 @@ void Variable::operator=(const Variable& other)
 	m_lockMode = 0;
 	m_elementDatatype = other.m_elementDatatype;
 	m_elementTypeLocked = other.m_elementTypeLocked;
+}
+
+Variable operator+(const Variable& lhs, const Variable& rhs)
+{
+	if (lhs.m_datatype == rhs.m_datatype)
+	{
+		Variable ans;
+		if (lhs.m_datatype == Datatypes::Integer)
+		{
+			ans.setInteger(lhs.getInteger() + rhs.getInteger());
+		}
+		else if (lhs.m_datatype == Datatypes::Float)
+		{
+			ans.setFloat(lhs.getFloat() + rhs.getFloat());
+		}
+		else if (lhs.m_datatype == Datatypes::String)
+		{
+			ans.setString(lhs.getString() + rhs.getString());
+		}
+		else
+		{
+			ans.makeError();
+		}
+		return ans;
+	}
+	else
+	{
+		Variable ans;
+		if (lhs.m_datatype == Datatypes::Integer && rhs.m_datatype == Datatypes::Float)
+		{
+			ans.setFloat(lhs.getInteger() + rhs.getFloat());
+		}
+		else if (lhs.m_datatype == Datatypes::Float && rhs.m_datatype == Datatypes::Integer)
+		{
+			ans.setFloat(lhs.getFloat() + rhs.getInteger());
+		}
+		else
+		{
+			ans.makeError();
+		}
+		return ans;
+	}
+}
+
+Variable operator-(const Variable& lhs, const Variable& rhs)
+{
+	if (lhs.m_datatype == rhs.m_datatype)
+	{
+		Variable ans;
+		if (lhs.m_datatype == Datatypes::Integer)
+		{
+			ans.setInteger(lhs.getInteger() - rhs.getInteger());
+		}
+		else if (lhs.m_datatype == Datatypes::Float)
+		{
+			ans.setFloat(lhs.getFloat() - rhs.getFloat());
+		}
+		else
+		{
+			ans.makeError();
+		}
+		return ans;
+	}
+	else
+	{
+		Variable ans;
+		if (lhs.m_datatype == Datatypes::Integer && rhs.m_datatype == Datatypes::Float)
+		{
+			ans.setFloat(lhs.getInteger() - rhs.getFloat());
+		}
+		else if (lhs.m_datatype == Datatypes::Float && rhs.m_datatype == Datatypes::Integer)
+		{
+			ans.setFloat(lhs.getFloat() - rhs.getInteger());
+		}
+		else
+		{
+			ans.makeError();
+		}
+		return ans;
+	}
 }

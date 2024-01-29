@@ -8,6 +8,7 @@ enum class Datatypes
 	List,
 	Dictionary,
 	Stack,
+	Error,
 	None,
 	Any
 };

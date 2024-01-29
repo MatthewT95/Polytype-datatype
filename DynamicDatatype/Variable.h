@@ -38,6 +38,7 @@ public:
 	void makeStack();
 	void makeStack(Datatypes dt);
 	void makeNone();
+	void makeError();
 
 	// List
 	void appendListElement(Variable value);
@@ -77,6 +78,11 @@ public:
 	static Variable createStack(Datatypes dt, bool locked = false);
 
 	void operator=(const Variable& other);
+
+	// Arithmetic Operators
+	friend Variable operator+(const Variable& lhs, const Variable& rhs);
+	friend Variable operator-(const Variable& lhs, const Variable& rhs);
+
 private:
 	VariableValue* m_value; // Pointer to the value stored in the variable
 	Datatypes m_datatype; // Datatype of value store in the variable
