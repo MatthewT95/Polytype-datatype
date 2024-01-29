@@ -222,46 +222,48 @@ void Variable::setBoolean(bool value)
 
 void Variable::makeList()
 {
-	if (m_lockMode == 0 || m_datatype == Datatypes::List)
-	{
-		if (m_lockMode == 2)
-		{
-			throw std::logic_error("Variable is constant and can not be changed while value locked.");
-		}
-		//delete m_value;
-		m_value = new ListValue();
-		m_datatype = Datatypes::List;
-		m_elementDatatype = Datatypes::None;
-		m_elementTypeLocked = false;
-	}
-	else
+	if (m_lockMode > 0 && m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is type locked to a non List datatype.");
 	}
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	//delete m_value;
+	m_value = new ListValue();
+	m_datatype = Datatypes::List;
+	m_elementDatatype = Datatypes::None;
+	m_elementTypeLocked = false;
 }
 
 void Variable::makeList(Datatypes dt)
 {
-	if (m_lockMode == 0 || m_datatype == Datatypes::List)
-	{
-		if (m_lockMode == 2)
-		{
-			throw std::logic_error("Variable is constant and can not be changed while value locked.");
-		}
-		delete m_value;
-		m_value = new ListValue();
-		m_datatype = Datatypes::List;
-		m_elementDatatype = dt;
-		m_elementTypeLocked = true;
-	}
-	else
+	if (m_lockMode > 0 && m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is type locked to a non List datatype.");
 	}
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	delete m_value;
+	m_value = new ListValue();
+	m_datatype = Datatypes::List;
+	m_elementDatatype = dt;
+	m_elementTypeLocked = true;
 }
 
 void Variable::makeNone()
 {
+	if (m_lockMode > 0 && m_datatype != Datatypes::None)
+	{
+		throw std::logic_error("Variable is type locked to a non None datatype.");
+	}
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
 	delete m_value;
 	m_value = nullptr;
 	m_datatype = Datatypes::None;
@@ -271,42 +273,37 @@ void Variable::makeNone()
 
 void Variable::makeDictionarly()
 {
-	if (m_lockMode == 0 || m_datatype == Datatypes::Dictionary)
+	if (m_lockMode > 0 && m_datatype != Datatypes::Dictionary)
 	{
-		if (m_lockMode == 2)
-		{
-			throw std::logic_error("Variable is constant and can not be changed while value locked.");
-		}
-		delete m_value;
-		m_value = new DictionaryValue();
-		m_datatype = Datatypes::Dictionary;
-		m_elementDatatype = Datatypes::None;
-		m_elementTypeLocked = false;
+		throw std::logic_error("Variable is type locked to a non Dictionary datatype.");
 	}
-	else
+
+	if (m_lockMode == 2)
 	{
-		throw std::logic_error("Variable is type locked to a non List datatype.2");
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
 	}
+	delete m_value;
+	m_value = new DictionaryValue();
+	m_datatype = Datatypes::Dictionary;
+	m_elementDatatype = Datatypes::None;
+	m_elementTypeLocked = false;
 }
 
 void Variable::makeDictionarly(Datatypes dt)
 {
-	if (m_lockMode == 0 || m_datatype == Datatypes::Dictionary)
+	if (m_lockMode > 0 && m_datatype != Datatypes::Dictionary)
 	{
-		if (m_lockMode == 2)
-		{
-			throw std::logic_error("Variable is constant and can not be changed while value locked.");
-		}
-		delete m_value;
-		m_value = new DictionaryValue();
-		m_datatype = Datatypes::Dictionary;
-		m_elementDatatype = dt;
-		m_elementTypeLocked = true;
+		throw std::logic_error("Variable is type locked to a non Dictionary datatype.");
 	}
-	else
+	if (m_lockMode == 2)
 	{
-		throw std::logic_error("Variable is type locked to a non List datatype.");
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
 	}
+	delete m_value;
+	m_value = new DictionaryValue();
+	m_datatype = Datatypes::Dictionary;
+	m_elementDatatype = dt;
+	m_elementTypeLocked = true;
 }
 
 void Variable::appendListElement(Variable value)
