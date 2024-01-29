@@ -308,195 +308,156 @@ void Variable::makeDictionarly(Datatypes dt)
 
 void Variable::appendListElement(Variable value)
 {
-	if (m_datatype == Datatypes::List)
+	if (m_datatype != Datatypes::List)
 	{
-		if (m_lockMode == 0 || value.getDatatype() == m_elementDatatype)
+		throw std::logic_error("Variable is not of type List");
+	}
+	if (m_lockMode == 0 || value.getDatatype() == m_elementDatatype)
+	{
+		if (m_elementTypeLocked)
 		{
-			if (m_elementTypeLocked)
-			{
-				value.setLockMode(1);
-			}
-			((ListValue*)m_value)->append(value);
+			value.setLockMode(1);
 		}
-		else
-		{
-			throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
-		}
+		((ListValue*)m_value)->append(value);
 	}
 	else
 	{
-		throw std::logic_error("Variable is not of type List");
+		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
 }
 
 Variable& Variable::getListElement(unsigned int index)
 {
-	if (m_datatype == Datatypes::List)
-	{
-		return ((ListValue*)m_value)->getElement(index);
-	}
-	else
+	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
+	return ((ListValue*)m_value)->getElement(index);
 }
 
 Variable Variable::getListElementCopy(unsigned int index) const
 {
-	if (m_datatype == Datatypes::List)
-	{
-		return ((ListValue*)m_value)->getElement(index);
-	}
-	else
+	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
+	return ((ListValue*)m_value)->getElement(index);
 }
 
 void Variable::setListElement(unsigned int index, Variable value)
 {
-	if (m_datatype == Datatypes::List)
+	if (m_datatype != Datatypes::List)
 	{
-		if (m_lockMode == 0 || value.getDatatype() == m_elementDatatype)
+		throw std::logic_error("Variable is not of type List");
+	}
+	if (m_lockMode == 0 || value.getDatatype() == m_elementDatatype)
+	{
+		if (getListElement(index).m_lockMode == 1)
 		{
-			if (getListElement(index).m_lockMode == 1)
-			{
-				throw std::logic_error("Variable in list at index " + std::to_string(index) + " is type locked to " +
-					datatypeName(getListElement(index).getDatatype()));
-			}
-			if (getListElement(index).m_lockMode == 2)
-			{
-				throw std::logic_error("Variable is constant and can not be changed while value locked.");
-			}
-			if (m_elementTypeLocked)
-			{
-				value.setLockMode(1);
-			}
-			((ListValue*)m_value)->setElement(index, value);
+			throw std::logic_error("Variable in list at index " + std::to_string(index) + " is type locked to " +
+				datatypeName(getListElement(index).getDatatype()));
 		}
-		else
+		if (getListElement(index).m_lockMode == 2)
 		{
-			throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
+			throw std::logic_error("Variable is constant and can not be changed while value locked.");
 		}
+		if (m_elementTypeLocked)
+		{
+			value.setLockMode(1);
+		}
+		((ListValue*)m_value)->setElement(index, value);
 	}
 	else
 	{
-		throw std::logic_error("Variable is not of type List");
+		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
 }
 
 void Variable::removeListElement(unsigned int index)
 {
-	if (m_datatype == Datatypes::List)
-	{
-		return ((ListValue*)m_value)->remove(index);
-	}
-	else
+	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
+	return ((ListValue*)m_value)->remove(index);
 }
 
 unsigned int Variable::getListElementsCount()
 {
-	if (m_datatype == Datatypes::List)
-	{
-		return ((ListValue*)m_value)->size();
-	}
-	else
+	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
+	return ((ListValue*)m_value)->size();
 }
 
 void Variable::clearListElements()
 {
-	if (m_datatype == Datatypes::List)
-	{
-		return ((ListValue*)m_value)->empty();
-	}
-	else
+	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
+	return ((ListValue*)m_value)->empty();
 }
 
 void Variable::fillList(unsigned int targetSize, Variable fillValue)
 {
-	if (m_datatype == Datatypes::List)
-	{
-		while (((ListValue*)m_value)->size() < targetSize)
-		{
-			((ListValue*)m_value)->append(fillValue);
-		}
-	}
-	else
+	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
+	}
+	while (((ListValue*)m_value)->size() < targetSize)
+	{
+		((ListValue*)m_value)->append(fillValue);
 	}
 }
 
 void Variable::pruneList(unsigned int targetSize)
 {
-	if (m_datatype == Datatypes::List)
-	{
-		while (((ListValue*)m_value)->size() > targetSize)
-		{
-			((ListValue*)m_value)->remove(((ListValue*)m_value)->size()-1);
-		}
-	}
-	else
+	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
+	}
+	while (((ListValue*)m_value)->size() > targetSize)
+	{
+		((ListValue*)m_value)->remove(((ListValue*)m_value)->size()-1);
 	}
 }
 
 bool Variable::keyExists(std::string key)
 {
-	if (m_datatype == Datatypes::Dictionary)
-	{
-		return ((DictionaryValue*)m_value)->keyExists(key);
-	}
-	else
+	if (m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is not of type Dictionarly");
 	}
+	return ((DictionaryValue*)m_value)->keyExists(key);
 }
 
 Variable& Variable::getDictionarlyElement(std::string key)
 {
-	if (m_datatype == Datatypes::Dictionary)
-	{
-		return ((DictionaryValue*)m_value)->getValue(key);
-	}
-	else
+	if (m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is not of type Dictionarly");
 	}
+	return ((DictionaryValue*)m_value)->getValue(key);
 }
 
 void Variable::setDictionarlyElement(std::string key, Variable value)
 {
-	if (m_datatype == Datatypes::Dictionary)
-	{
-		if (m_lockMode == 0 || value.getDatatype() == m_elementDatatype)
-		{
-			if (getDictionarlyElement(key).m_lockMode == 2)
-			{
-				throw std::logic_error("Variable is constant and can not be changed while value locked.");
-			}
-			value.setLockMode(1);
-			((DictionaryValue*)m_value)->setValue(key, value);
-		}
-		else
-		{
-			throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
-		}
-	}
-	else
+	if (m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is not of type Dictionarly");
 	}
+	if (m_lockMode != 0 && value.getDatatype() != m_elementDatatype)
+	{
+		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
+	}
+	if (getDictionarlyElement(key).m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	value.setLockMode(1);
+	((DictionaryValue*)m_value)->setValue(key, value);
 }
 
 void Variable::removeDictionarlyKey(std::string key)
