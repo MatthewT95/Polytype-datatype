@@ -66,10 +66,10 @@ public:
 
 	void operator=(const Variable& other);
 private:
-	VariableValue* m_value;
-	Datatypes m_datatype;
-	Datatypes m_elementDatatype;
+	VariableValue* m_value; // Pointer to the value stored in the variable
+	Datatypes m_datatype; // Datatype of value store in the variable
+	Datatypes m_elementDatatype; // The datatype the collection elements are locked to if locked
 	unsigned char m_lockMode; // 0: unlocked 1: type locked 2: value locked
-	bool m_elementTypeLocked;
+	bool m_elementTypeLocked; // If true the elements of the collection are locked to m_elementDatatype
 };
 
