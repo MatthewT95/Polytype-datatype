@@ -118,50 +118,39 @@ Variable::Variable(bool value, int lockMode)
 
 long long Variable::getInteger() const
 {
-	if (m_datatype == Datatypes::Integer)
-	{
-		return ((IntegerValue*)m_value)->getValue();
-	}
-	else
+	if (m_datatype != Datatypes::Integer)
 	{
 		throw std::logic_error("Variable is not of type Integer.");
 	}
+	return ((IntegerValue*)m_value)->getValue();
+
 }
 
 double Variable::getFloat() const
 {
-	if (m_datatype == Datatypes::Float)
-	{
-		return ((FloatValue*)m_value)->getValue();
-	}
-	else
+	if (m_datatype != Datatypes::Float)
 	{
 		throw std::logic_error("Variable is not of type Float.");
 	}
+	return ((FloatValue*)m_value)->getValue();
 }
 
 std::string Variable::getString() const
 {
-	if (m_datatype == Datatypes::String)
-	{
-		return ((StringValue*)m_value)->getValue();
-	}
-	else
+	if (m_datatype != Datatypes::String)
 	{
 		throw std::logic_error("Variable is not of type String.");
 	}
+	return ((StringValue*)m_value)->getValue();
 }
 
 bool Variable::getBoolean() const
 {
-	if (m_datatype == Datatypes::Boolean) 
-	{
-		return ((BooleanValue*)m_value)->getValue();
-	}
-	else
+	if (m_datatype != Datatypes::Boolean)
 	{
 		throw std::logic_error("Variable is not of type Boolean.");
 	}
+	return ((BooleanValue*)m_value)->getValue();
 }
 
 bool Variable::isNone() const
