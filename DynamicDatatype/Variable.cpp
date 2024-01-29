@@ -58,7 +58,7 @@ Variable::Variable(const Variable& src)
 		m_datatype = Datatypes::None;
 	}
 
-	m_lockMode = m_lockMode > 0 ? 1 : 0;
+	m_lockMode = src.m_lockMode;
 	m_elementDatatype = src.m_elementDatatype;
 	m_elementTypeLocked = src.m_elementTypeLocked;
 }
@@ -67,7 +67,7 @@ Variable::~Variable()
 {
 	if (m_value != nullptr)
 	{
-		//delete m_value;
+		delete m_value;
 	}
 }
 
@@ -161,18 +161,6 @@ bool Variable::getBoolean() const
 	else
 	{
 		throw std::logic_error("Variable is not of type Boolean.");
-	}
-}
-
-std::vector<Variable>& Variable::getList() const
-{
-	if (m_datatype == Datatypes::List)
-	{
-		//return ((ListValue*)m_value)->m_values;
-	}
-	else
-	{
-		throw std::logic_error("Variable is not of type List.");
 	}
 }
 
@@ -648,4 +636,56 @@ Variable Variable::createDictionarly(Datatypes dt, bool locked)
 		a.setLockMode(1);
 	}
 	return a;
+}
+
+void Variable::operator=(const Variable& other)
+{
+	if (other.m_datatype == Datatypes::Integer)
+	{
+		m_datatype = Datatypes::Integer;
+		m_value = new IntegerValue(other.getInteger());
+	}
+	else if (other.m_datatype == Datatypes::Float)
+	{
+		m_datatype = Datatypes::Float;
+		m_value = new FloatValue(other.getFloat());
+	}
+	else if (other.m_datatype == Datatypes::String)
+	{
+		m_datatype = Datatypes::String;
+		m_value = new StringValue(other.getString());
+	}
+	else if (other.m_datatype == Datatypes::Boolean)
+	{
+		m_datatype = Datatypes::Boolean;
+		m_value = new BooleanValue(other.getBoolean());
+	}
+	else if (other.m_datatype == Datatypes::List)
+	{
+		m_datatype = Datatypes::List;
+		m_value = new ListValue();
+		for (int i = 0; i < ((ListValue*)other.m_value)->size(); i++)
+		{
+			((ListValue*)m_value)->append(other.getListElementCopy(i));
+		}
+	}
+	else if (other.m_datatype == Datatypes::Dictionary)
+	{
+		m_datatype = Datatypes::Dictionary;
+		m_value = new DictionaryValue();
+
+		for (std::string key : ((DictionaryValue*)other.m_value)->getKeys())
+		{
+			this->setDictionarlyElement(key, ((DictionaryValue*)other.m_value)->getValue(key));
+		}
+	}
+	else
+	{
+		m_value = nullptr;
+		m_datatype = Datatypes::None;
+	}
+
+	m_lockMode = 0;
+	m_elementDatatype = other.m_elementDatatype;
+	m_elementTypeLocked = other.m_elementTypeLocked;
 }

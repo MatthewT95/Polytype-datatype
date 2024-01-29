@@ -64,6 +64,8 @@ public:
 	static Variable createList(Datatypes dt, bool locked = false);
 	static Variable createDictionarly();
 	static Variable createDictionarly(Datatypes dt, bool locked = false);
+
+	void operator=(const Variable& other);
 private:
 	VariableValue* m_value;
 	Datatypes m_datatype;
