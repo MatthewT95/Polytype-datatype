@@ -24,7 +24,6 @@ public:
 	double getFloat() const;
 	std::string getString() const;
 	bool getBoolean() const;
-	std::vector<Variable>& getList() const;
 	bool isNone() const;
 
 	void setInteger(long long value);
@@ -64,6 +63,8 @@ public:
 	static Variable createList(Datatypes dt, bool locked = false);
 	static Variable createDictionarly();
 	static Variable createDictionarly(Datatypes dt, bool locked = false);
+
+	void operator=(const Variable& other);
 private:
 	VariableValue* m_value;
 	Datatypes m_datatype;
