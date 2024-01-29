@@ -6,6 +6,7 @@
 #include "BooleanValue.h"
 #include "ListValue.h"
 #include "DictionaryValue.h"
+#include "StackValue.h"
 #include <vector>
 
 class Variable
@@ -34,6 +35,8 @@ public:
 	void makeList(Datatypes dt);
 	void makeDictionarly();
 	void makeDictionarly(Datatypes dt);
+	void makeStack();
+	void makeStack(Datatypes dt);
 	void makeNone();
 
 	// List
@@ -54,6 +57,13 @@ public:
 	void removeDictionarlyKey(std::string key);
 	void clearDictionarlyKeys();
 
+	// Stack
+	bool isStackEmpty();
+	unsigned int stackSize();
+	void stackPush(Variable value);
+	Variable stackPop();
+
+
 	Datatypes getDatatype();
 	void setLockMode(unsigned int mode);
 
@@ -63,6 +73,8 @@ public:
 	static Variable createList(Datatypes dt, bool locked = false);
 	static Variable createDictionarly();
 	static Variable createDictionarly(Datatypes dt, bool locked = false);
+	static Variable createStack();
+	static Variable createStack(Datatypes dt, bool locked = false);
 
 	void operator=(const Variable& other);
 private:

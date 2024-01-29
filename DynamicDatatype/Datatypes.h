@@ -7,6 +7,7 @@ enum class Datatypes
 	Boolean,
 	List,
 	Dictionary,
+	Stack,
 	None,
 	Any
 };

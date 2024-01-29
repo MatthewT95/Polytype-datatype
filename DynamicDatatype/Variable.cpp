@@ -325,6 +325,44 @@ void Variable::makeDictionarly(Datatypes dt)
 	m_elementTypeLocked = true;
 }
 
+void Variable::makeStack()
+{
+	// Guards against using changeing datatype of variable if it is type locked
+	if (m_lockMode > 0 && m_datatype != Datatypes::Stack)
+	{
+		throw std::logic_error("Variable is type locked to a non Stack datatype.");
+	}
+	// Guards against using changeing value of variable if it is value locked
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	delete m_value;
+	m_value = new StackValue();
+	m_datatype = Datatypes::Stack;
+	m_elementDatatype = Datatypes::None;
+	m_elementTypeLocked = false;
+}
+
+void Variable::makeStack(Datatypes dt)
+{
+	// Guards against using changeing datatype of variable if it is type locked
+	if (m_lockMode > 0 && m_datatype != Datatypes::Stack)
+	{
+		throw std::logic_error("Variable is type locked to a non Stack datatype.");
+	}
+	// Guards against using changeing value of variable if it is value locked
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	delete m_value;
+	m_value = new StackValue();
+	m_datatype = Datatypes::Stack;
+	m_elementDatatype = dt;
+	m_elementTypeLocked = true;
+}
+
 void Variable::appendListElement(Variable value)
 {
 	// Guards against using changeing datatype of variable if it is type locked
@@ -492,7 +530,7 @@ void Variable::setDictionarlyElement(std::string key, Variable value)
 	// Guards against setting collection element to wrong type if element type locked
 	if (m_lockMode != 0 && value.getDatatype() != m_elementDatatype)
 	{
-		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
+		throw std::logic_error("Dictionary elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
 	// Guards against changing element value if element is value locked
 	if (getDictionarlyElement(key).m_lockMode == 2)
@@ -524,6 +562,51 @@ void Variable::clearDictionarlyKeys()
 		throw std::logic_error("Variable is not of type Dictionarly");
 	}
 	((DictionaryValue*)m_value)->empty();
+}
+
+bool Variable::isStackEmpty()
+{
+	// Guards against using Stack method on non-stack variable
+	if (m_datatype != Datatypes::Stack)
+	{
+		throw std::logic_error("Variable is not of type Stack");
+	}
+	return ((StackValue*)m_value)->isEmpty();
+}
+
+unsigned int Variable::stackSize()
+{
+	// Guards against using Stack method on non-stack variable
+	if (m_datatype != Datatypes::Stack)
+	{
+		throw std::logic_error("Variable is not of type Stack");
+	}
+	return ((StackValue*)m_value)->size();
+}
+
+void Variable::stackPush(Variable value)
+{
+	// Guards against using Stack method on non-stack variable
+	if (m_datatype != Datatypes::Stack)
+	{
+		throw std::logic_error("Variable is not of type Stack");
+	}
+	// Guards against pushing value that does not match element type when elements are type locked
+	if (m_elementTypeLocked == true && value.getDatatype() != m_elementDatatype)
+	{
+		throw std::logic_error("Stack elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
+	}
+	((StackValue*)m_value)->push(value);
+}
+
+Variable Variable::stackPop()
+{
+	// Guards against using Stack method on non-stack variable
+	if (m_datatype != Datatypes::Stack)
+	{
+		throw std::logic_error("Variable is not of type Stack");
+	}
+	return ((StackValue*)m_value)->pop();
 }
 
 Datatypes Variable::getDatatype()
@@ -608,6 +691,24 @@ Variable Variable::createDictionarly(Datatypes dt, bool locked)
 {
 	Variable a;
 	a.makeDictionarly(dt);
+	if (locked)
+	{
+		a.setLockMode(1);
+	}
+	return a;
+}
+
+Variable Variable::createStack()
+{
+	Variable a;
+	a.makeStack();
+	return a;
+}
+
+Variable Variable::createStack(Datatypes dt, bool locked)
+{
+	Variable a;
+	a.makeStack(dt);
 	if (locked)
 	{
 		a.setLockMode(1);

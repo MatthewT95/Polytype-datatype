@@ -42,6 +42,9 @@
     <ClCompile Include="DictionaryValue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StackValue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VariableValue.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DictionaryValue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StackValue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
