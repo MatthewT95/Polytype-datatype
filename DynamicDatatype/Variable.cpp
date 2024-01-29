@@ -6,14 +6,13 @@ Variable::Variable()
 {
 	m_value = nullptr;
 	m_datatype = Datatypes::None;
-	m_typeLocked = false;
+	m_lockMode = 0;
 	m_elementDatatype = Datatypes::None;
 	m_elementTypeLocked = false;
 }
 
 Variable::Variable(const Variable& src)
 {
-	m_typeLocked = false;
 	if (src.m_datatype == Datatypes::Integer)
 	{
 		m_datatype = Datatypes::Integer;
@@ -59,7 +58,7 @@ Variable::Variable(const Variable& src)
 		m_datatype = Datatypes::None;
 	}
 
-	m_typeLocked = src.m_typeLocked;
+	m_lockMode = m_lockMode > 0 ? 1 : 0;
 	m_elementDatatype = src.m_elementDatatype;
 	m_elementTypeLocked = src.m_elementTypeLocked;
 }
@@ -72,49 +71,49 @@ Variable::~Variable()
 	}
 }
 
-Variable::Variable(int value,bool locked)
+Variable::Variable(int value,int lockMode)
 {
 	m_value = new IntegerValue(value);
-	m_typeLocked = locked;
 	m_datatype = Datatypes::Integer;
 	m_elementDatatype = Datatypes::None;
 	m_elementTypeLocked = false;
+	m_lockMode = lockMode;
 }
 
-Variable::Variable(double value, bool locked)
+Variable::Variable(double value, int lockMode)
 {
 	m_value = new FloatValue(value);
-	m_typeLocked = locked;
 	m_datatype = Datatypes::Float;
 	m_elementDatatype = Datatypes::None;
 	m_elementTypeLocked = false;
+	m_lockMode = lockMode;
 }
 
-Variable::Variable(std::string value, bool locked)
+Variable::Variable(std::string value, int lockMode)
 {
 	m_value = new StringValue(value);
-	m_typeLocked = locked;
 	m_datatype = Datatypes::String;
 	m_elementDatatype = Datatypes::None;
 	m_elementTypeLocked = false;
+	m_lockMode = lockMode;
 }
 
-Variable::Variable(const char* value, bool locked)
+Variable::Variable(const char* value, int lockMode)
 {
 	m_value = new StringValue(std::string(value));
-	m_typeLocked = locked;
 	m_datatype = Datatypes::String;
 	m_elementDatatype = Datatypes::None;
 	m_elementTypeLocked = false;
+	m_lockMode = lockMode;
 }
 
-Variable::Variable(bool value, bool locked)
+Variable::Variable(bool value, int lockMode)
 {
 	m_value = new BooleanValue(value);
-	m_typeLocked = locked;
 	m_datatype = Datatypes::Boolean;
 	m_elementDatatype = Datatypes::None;
 	m_elementTypeLocked = false;
+	m_lockMode = lockMode;
 }
 
 long long Variable::getInteger() const
@@ -184,8 +183,12 @@ bool Variable::isNone() const
 
 void Variable::setInteger(long long value)
 {
-	if (m_typeLocked == false || m_datatype == Datatypes::Integer)
+	if (m_lockMode == 0 || m_datatype == Datatypes::Integer)
 	{
+		if (m_lockMode == 2)
+		{
+			throw std::logic_error("Variable is constant and can not be changed while value locked.");
+		}
 		delete m_value;
 		m_value = new IntegerValue(value);
 		m_datatype = Datatypes::Integer;
@@ -198,8 +201,12 @@ void Variable::setInteger(long long value)
 
 void Variable::setFloat(double value)
 {
-	if (m_typeLocked == false || m_datatype == Datatypes::Float)
+	if (m_lockMode == 0 || m_datatype == Datatypes::Float)
 	{
+		if (m_lockMode == 2)
+		{
+			throw std::logic_error("Variable is constant and can not be changed while value locked.");
+		}
 		delete m_value;
 		m_value = new FloatValue(value);
 		m_datatype = Datatypes::Float;
@@ -212,8 +219,12 @@ void Variable::setFloat(double value)
 
 void Variable::setString(std::string value)
 {
-	if (m_typeLocked == false || m_datatype == Datatypes::String)
+	if (m_lockMode == 0 || m_datatype == Datatypes::String)
 	{
+		if (m_lockMode == 2)
+		{
+			throw std::logic_error("Variable is constant and can not be changed while value locked.");
+		}
 		delete m_value;
 		m_value = new StringValue(value);
 		m_datatype = Datatypes::String;
@@ -226,8 +237,12 @@ void Variable::setString(std::string value)
 
 void Variable::setBoolean(bool value)
 {
-	if (m_typeLocked == false || m_datatype == Datatypes::Boolean)
+	if (m_lockMode == 0 || m_datatype == Datatypes::Boolean)
 	{
+		if (m_lockMode == 2)
+		{
+			throw std::logic_error("Variable is constant and can not be changed while value locked.");
+		}
 		delete m_value;
 		m_value = new BooleanValue(value);
 		m_datatype = Datatypes::Boolean;
@@ -240,8 +255,12 @@ void Variable::setBoolean(bool value)
 
 void Variable::makeList()
 {
-	if (m_typeLocked == false || m_datatype == Datatypes::List)
+	if (m_lockMode == 0 || m_datatype == Datatypes::List)
 	{
+		if (m_lockMode == 2)
+		{
+			throw std::logic_error("Variable is constant and can not be changed while value locked.");
+		}
 		//delete m_value;
 		m_value = new ListValue();
 		m_datatype = Datatypes::List;
@@ -256,8 +275,12 @@ void Variable::makeList()
 
 void Variable::makeList(Datatypes dt)
 {
-	if (m_typeLocked == false || m_datatype == Datatypes::List)
+	if (m_lockMode == 0 || m_datatype == Datatypes::List)
 	{
+		if (m_lockMode == 2)
+		{
+			throw std::logic_error("Variable is constant and can not be changed while value locked.");
+		}
 		delete m_value;
 		m_value = new ListValue();
 		m_datatype = Datatypes::List;
@@ -281,8 +304,12 @@ void Variable::makeNone()
 
 void Variable::makeDictionarly()
 {
-	if (m_typeLocked == false || m_datatype == Datatypes::Dictionary)
+	if (m_lockMode == 0 || m_datatype == Datatypes::Dictionary)
 	{
+		if (m_lockMode == 2)
+		{
+			throw std::logic_error("Variable is constant and can not be changed while value locked.");
+		}
 		delete m_value;
 		m_value = new DictionaryValue();
 		m_datatype = Datatypes::Dictionary;
@@ -297,8 +324,12 @@ void Variable::makeDictionarly()
 
 void Variable::makeDictionarly(Datatypes dt)
 {
-	if (m_typeLocked == false || m_datatype == Datatypes::Dictionary)
+	if (m_lockMode == 0 || m_datatype == Datatypes::Dictionary)
 	{
+		if (m_lockMode == 2)
+		{
+			throw std::logic_error("Variable is constant and can not be changed while value locked.");
+		}
 		delete m_value;
 		m_value = new DictionaryValue();
 		m_datatype = Datatypes::Dictionary;
@@ -315,11 +346,11 @@ void Variable::appendListElement(Variable value)
 {
 	if (m_datatype == Datatypes::List)
 	{
-		if (m_elementTypeLocked == false || value.getDatatype() == m_elementDatatype)
+		if (m_lockMode == 0 || value.getDatatype() == m_elementDatatype)
 		{
 			if (m_elementTypeLocked)
 			{
-				value.lockType();
+				value.setLockMode(1);
 			}
 			((ListValue*)m_value)->append(value);
 		}
@@ -362,16 +393,20 @@ void Variable::setListElement(unsigned int index, Variable value)
 {
 	if (m_datatype == Datatypes::List)
 	{
-		if (m_elementTypeLocked == false || value.getDatatype() == m_elementDatatype)
+		if (m_lockMode == 0 || value.getDatatype() == m_elementDatatype)
 		{
-			if (getListElement(index).m_typeLocked == true)
+			if (getListElement(index).m_lockMode == 1)
 			{
 				throw std::logic_error("Variable in list at index " + std::to_string(index) + " is type locked to " +
 					datatypeName(getListElement(index).getDatatype()));
 			}
+			if (getListElement(index).m_lockMode == 2)
+			{
+				throw std::logic_error("Variable is constant and can not be changed while value locked.");
+			}
 			if (m_elementTypeLocked)
 			{
-				value.lockType();
+				value.setLockMode(1);
 			}
 			((ListValue*)m_value)->setElement(index, value);
 		}
@@ -480,9 +515,13 @@ void Variable::setDictionarlyElement(std::string key, Variable value)
 {
 	if (m_datatype == Datatypes::Dictionary)
 	{
-		if (m_elementTypeLocked == false || value.getDatatype() == m_elementDatatype)
+		if (m_lockMode == 0 || value.getDatatype() == m_elementDatatype)
 		{
-			value.lockType();
+			if (getDictionarlyElement(key).m_lockMode == 2)
+			{
+				throw std::logic_error("Variable is constant and can not be changed while value locked.");
+			}
+			value.setLockMode(1);
 			((DictionaryValue*)m_value)->setValue(key, value);
 		}
 		else
@@ -525,14 +564,16 @@ Datatypes Variable::getDatatype()
 	return m_datatype;
 }
 
-void Variable::lockType()
+void Variable::setLockMode(unsigned int mode)
 {
-	m_typeLocked = true;
-}
-
-void Variable::unlockType()
-{
-	m_typeLocked = false;
+	if (mode >= 0 && mode <= 2)
+	{
+		m_lockMode = mode;
+	}
+	else
+	{
+		throw std::invalid_argument("Not a vaild lock mode.");
+	}
 }
 
 std::string Variable::datatypeName(Datatypes dt)
@@ -586,7 +627,7 @@ Variable Variable::createList(Datatypes dt, bool locked)
 	a.makeList(dt);
 	if (locked)
 	{
-		a.lockType();
+		a.setLockMode(1);
 	}
 	return a;
 }
@@ -604,7 +645,7 @@ Variable Variable::createDictionarly(Datatypes dt, bool locked)
 	a.makeDictionarly(dt);
 	if (locked)
 	{
-		a.lockType();
+		a.setLockMode(1);
 	}
 	return a;
 }

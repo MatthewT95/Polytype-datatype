@@ -14,11 +14,11 @@ public:
 	Variable();
 	Variable(const Variable& src);
 	~Variable();
-	Variable(int value,bool locked = false);
-	Variable(double value, bool locked = false);
-	Variable(std::string value, bool locked = false);
-	Variable(const char* value, bool locked = false);
-	Variable(bool value, bool locked = false);
+	Variable(int value, int lockMode = 0);
+	Variable(double value, int lockMode = 0);
+	Variable(std::string value, int lockMode = 0);
+	Variable(const char* value, int lockMode = 0);
+	Variable(bool value, int lockMode = 0);
 
 	long long getInteger() const;
 	double getFloat() const;
@@ -56,8 +56,7 @@ public:
 	void clearDictionarlyKeys();
 
 	Datatypes getDatatype();
-	void lockType();
-	void unlockType();
+	void setLockMode(unsigned int mode);
 
 	static std::string datatypeName(Datatypes dt);
 
@@ -69,7 +68,7 @@ private:
 	VariableValue* m_value;
 	Datatypes m_datatype;
 	Datatypes m_elementDatatype;
-	bool m_typeLocked;
+	unsigned char m_lockMode; // 0: unlocked 1: type locked 2: value locked
 	bool m_elementTypeLocked;
 };
 
