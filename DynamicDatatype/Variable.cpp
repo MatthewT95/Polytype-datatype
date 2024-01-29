@@ -155,7 +155,7 @@ std::string Variable::getString() const
 
 bool Variable::getBoolean() const
 {
-	if (m_datatype == Datatypes::Boolean)
+	if (m_datatype == Datatypes::Boolean) 
 	{
 		return ((BooleanValue*)m_value)->getValue();
 	}
@@ -422,18 +422,6 @@ void Variable::clearElements()
 	}
 }
 
-void Variable::makeElementList(unsigned int index)
-{
-	if (m_datatype == Datatypes::List)
-	{
-		((ListValue*)m_value)->makeElementList(index);
-	}
-	else
-	{
-		throw std::logic_error("Variable is not of type List");
-	}
-}
-
 bool Variable::keyExists(std::string key)
 {
 	if (m_datatype == Datatypes::Dictionary)
@@ -546,6 +534,10 @@ std::string Variable::datatypeName(Datatypes dt)
 	else if (dt == Datatypes::None)
 	{
 		return "None";
+	}
+	else if (dt == Datatypes::Any)
+	{
+		return "Any";
 	}
 
 	return "";
