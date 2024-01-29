@@ -437,6 +437,21 @@ void Variable::fillList(unsigned int targetSize, Variable fillValue)
 	}
 }
 
+void Variable::pruneList(unsigned int targetSize)
+{
+	if (m_datatype == Datatypes::List)
+	{
+		while (((ListValue*)m_value)->size() > targetSize)
+		{
+			((ListValue*)m_value)->remove(((ListValue*)m_value)->size()-1);
+		}
+	}
+	else
+	{
+		throw std::logic_error("Variable is not of type List");
+	}
+}
+
 bool Variable::keyExists(std::string key)
 {
 	if (m_datatype == Datatypes::Dictionary)
