@@ -312,7 +312,7 @@ void Variable::appendListElement(Variable value)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
-	if (m_lockMode != 0 && value.getDatatype() != m_elementDatatype)
+	if (m_elementTypeLocked != 0 && value.getDatatype() != m_elementDatatype)
 	{
 		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
@@ -399,6 +399,10 @@ void Variable::fillList(unsigned int targetSize, Variable fillValue)
 	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
+	}
+	if (m_lockMode != 0 && m_elementDatatype != fillValue.getDatatype())
+	{
+		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
 	while (((ListValue*)m_value)->size() < targetSize)
 	{
