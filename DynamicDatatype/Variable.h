@@ -45,6 +45,7 @@ public:
 	void removeElement(unsigned int index);
 	unsigned int getElementsCount();
 	void clearElements();
+	void fillList(unsigned int targetSize, Variable fillValue);
 
 	// Dictionarly
 	bool keyExists(std::string key);

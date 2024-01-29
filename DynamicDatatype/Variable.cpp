@@ -422,6 +422,21 @@ void Variable::clearElements()
 	}
 }
 
+void Variable::fillList(unsigned int targetSize, Variable fillValue)
+{
+	if (m_datatype == Datatypes::List)
+	{
+		while (((ListValue*)m_value)->size() < targetSize)
+		{
+			((ListValue*)m_value)->append(fillValue);
+		}
+	}
+	else
+	{
+		throw std::logic_error("Variable is not of type List");
+	}
+}
+
 bool Variable::keyExists(std::string key)
 {
 	if (m_datatype == Datatypes::Dictionary)
