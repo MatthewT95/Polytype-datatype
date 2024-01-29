@@ -118,6 +118,7 @@ Variable::Variable(bool value, int lockMode)
 
 long long Variable::getInteger() const
 {
+	// Guards against using Interger method on non-integer variable
 	if (m_datatype != Datatypes::Integer)
 	{
 		throw std::logic_error("Variable is not of type Integer.");
@@ -128,6 +129,7 @@ long long Variable::getInteger() const
 
 double Variable::getFloat() const
 {
+	// Guards against using Float method on non-float variable
 	if (m_datatype != Datatypes::Float)
 	{
 		throw std::logic_error("Variable is not of type Float.");
@@ -137,6 +139,7 @@ double Variable::getFloat() const
 
 std::string Variable::getString() const
 {
+	// Guards against using String method on non-string variable
 	if (m_datatype != Datatypes::String)
 	{
 		throw std::logic_error("Variable is not of type String.");
@@ -146,6 +149,7 @@ std::string Variable::getString() const
 
 bool Variable::getBoolean() const
 {
+	// Guards against using Boolean method on non-boolean variable
 	if (m_datatype != Datatypes::Boolean)
 	{
 		throw std::logic_error("Variable is not of type Boolean.");
@@ -160,10 +164,12 @@ bool Variable::isNone() const
 
 void Variable::setInteger(long long value)
 {
+	// Guards against using changing datatype of variable if it is locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::Integer)
 	{
 		throw std::logic_error("Variable is type locked to a non Integer datatype.");
 	}
+	// Guards against using changing value of variable if it is locked
 	if (m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
@@ -175,11 +181,12 @@ void Variable::setInteger(long long value)
 
 void Variable::setFloat(double value)
 {
+	// Guards against using changing datatype of variable if it is type locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::Float)
 	{
 		throw std::logic_error("Variable is type locked to a non Float datatype.");
 	}
-
+	// Guards against using changing value of variable if it is value locked
 	if (m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
@@ -191,10 +198,12 @@ void Variable::setFloat(double value)
 
 void Variable::setString(std::string value)
 {
+	// Guards against using changeing datatype of variable if it is type locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::String)
 	{
 		throw std::logic_error("Variable is type locked to a non String datatype.");
 	}
+	// Guards against using changeing value of variable if it is value locked
 	if (m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
@@ -206,11 +215,12 @@ void Variable::setString(std::string value)
 
 void Variable::setBoolean(bool value)
 {
+	// Guards against using changeing datatype of variable if it is type locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::Boolean)
 	{
 		throw std::logic_error("Variable is type locked to a non Boolean datatype.");
 	}
-
+	// Guards against using changeing value of variable if it is value locked
 	if (m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
@@ -222,10 +232,12 @@ void Variable::setBoolean(bool value)
 
 void Variable::makeList()
 {
+	// Guards against using changeing datatype of variable if it is type locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is type locked to a non List datatype.");
 	}
+	// Guards against using changeing value of variable if it is value locked
 	if (m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
@@ -239,10 +251,12 @@ void Variable::makeList()
 
 void Variable::makeList(Datatypes dt)
 {
+	// Guards against using changeing datatype of variable if it is type locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is type locked to a non List datatype.");
 	}
+	// Guards against using changeing value of variable if it is value locked
 	if (m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
@@ -256,10 +270,12 @@ void Variable::makeList(Datatypes dt)
 
 void Variable::makeNone()
 {
+	// Guards against using changeing datatype of variable if it is type locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::None)
 	{
 		throw std::logic_error("Variable is type locked to a non None datatype.");
 	}
+	// Guards against using changeing value of variable if it is value locked
 	if (m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
@@ -273,11 +289,12 @@ void Variable::makeNone()
 
 void Variable::makeDictionarly()
 {
+	// Guards against using changeing datatype of variable if it is type locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is type locked to a non Dictionary datatype.");
 	}
-
+	// Guards against using changeing value of variable if it is value locked
 	if (m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
@@ -291,10 +308,12 @@ void Variable::makeDictionarly()
 
 void Variable::makeDictionarly(Datatypes dt)
 {
+	// Guards against using changeing datatype of variable if it is type locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is type locked to a non Dictionary datatype.");
 	}
+	// Guards against using changeing value of variable if it is value locked
 	if (m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
@@ -308,14 +327,17 @@ void Variable::makeDictionarly(Datatypes dt)
 
 void Variable::appendListElement(Variable value)
 {
+	// Guards against using changeing datatype of variable if it is type locked
 	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
+	// Guards against using changeing datatype of variable if it is value locked
 	if (m_elementTypeLocked != 0 && value.getDatatype() != m_elementDatatype)
 	{
 		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
+	// Locks the element if collection elements are suppost to type locked
 	if (m_elementTypeLocked)
 	{
 		value.setLockMode(1);
@@ -325,6 +347,7 @@ void Variable::appendListElement(Variable value)
 
 Variable& Variable::getListElement(unsigned int index)
 {
+	// Guards against using List method on non-list variable
 	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
@@ -334,6 +357,7 @@ Variable& Variable::getListElement(unsigned int index)
 
 Variable Variable::getListElementCopy(unsigned int index) const
 {
+	// Guards against using List method on non-list variable
 	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
@@ -343,19 +367,23 @@ Variable Variable::getListElementCopy(unsigned int index) const
 
 void Variable::setListElement(unsigned int index, Variable value)
 {
+	// Guards against using List method on non-list variable
 	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
+	// Guards against setting collection element to wrong type if element type locked
 	if (m_lockMode != 0 && value.getDatatype() != m_elementDatatype)
 	{
 		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
+	// Guards against changing variable type if type locked
 	if (getListElement(index).m_lockMode == 1)
 	{
 		throw std::logic_error("Variable in list at index " + std::to_string(index) + " is type locked to " +
 			datatypeName(getListElement(index).getDatatype()));
 	}
+	// Guards against changing value of variable that is value locked
 	if (getListElement(index).m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
@@ -369,6 +397,7 @@ void Variable::setListElement(unsigned int index, Variable value)
 
 void Variable::removeListElement(unsigned int index)
 {
+	// Guards against using List method on non-list variable
 	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
@@ -378,6 +407,7 @@ void Variable::removeListElement(unsigned int index)
 
 unsigned int Variable::getListElementsCount()
 {
+	// Guards against using List method on non-list variable
 	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
@@ -387,6 +417,7 @@ unsigned int Variable::getListElementsCount()
 
 void Variable::clearListElements()
 {
+	// Guards against using List method on non-list variable
 	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
@@ -396,26 +427,35 @@ void Variable::clearListElements()
 
 void Variable::fillList(unsigned int targetSize, Variable fillValue)
 {
+	// Guards against using List method on non-list variable
 	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
+	// Guards against filling collection with elements of the wrong type if element type locked
 	if (m_lockMode != 0 && m_elementDatatype != fillValue.getDatatype())
 	{
 		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
+	// Fills list with elements untill desired size is met
 	while (((ListValue*)m_value)->size() < targetSize)
 	{
+		if (m_elementTypeLocked)
+		{
+			fillValue.setLockMode(1);
+		}
 		((ListValue*)m_value)->append(fillValue);
 	}
 }
 
 void Variable::pruneList(unsigned int targetSize)
 {
+	// Guards against using List method on non-list variable
 	if (m_datatype != Datatypes::List)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
+	// Removes elements until desired size is met
 	while (((ListValue*)m_value)->size() > targetSize)
 	{
 		((ListValue*)m_value)->remove(((ListValue*)m_value)->size()-1);
@@ -424,6 +464,7 @@ void Variable::pruneList(unsigned int targetSize)
 
 bool Variable::keyExists(std::string key)
 {
+	// Guards against using Dictionary method on non-dictionary variable
 	if (m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is not of type Dictionarly");
@@ -433,6 +474,7 @@ bool Variable::keyExists(std::string key)
 
 Variable& Variable::getDictionarlyElement(std::string key)
 {
+	// Guards against using Dictionary method on non-dictionary variable
 	if (m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is not of type Dictionarly");
@@ -442,24 +484,31 @@ Variable& Variable::getDictionarlyElement(std::string key)
 
 void Variable::setDictionarlyElement(std::string key, Variable value)
 {
+	// Guards against using Dictionary method on non-dictionary variable
 	if (m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is not of type Dictionarly");
 	}
+	// Guards against setting collection element to wrong type if element type locked
 	if (m_lockMode != 0 && value.getDatatype() != m_elementDatatype)
 	{
 		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
+	// Guards against changing element value if element is value locked
 	if (getDictionarlyElement(key).m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
 	}
-	value.setLockMode(1);
+	if (m_elementTypeLocked)
+	{
+		value.setLockMode(1);
+	}
 	((DictionaryValue*)m_value)->setValue(key, value);
 }
 
 void Variable::removeDictionarlyKey(std::string key)
 {
+	// Guards against using Dictionary method on non-dictionary variable
 	if (m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is not of type Dictionarly");
@@ -469,6 +518,7 @@ void Variable::removeDictionarlyKey(std::string key)
 
 void Variable::clearDictionarlyKeys()
 {
+	// Guards against using Dictionary method on non-dictionary variable
 	if (m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is not of type Dictionarly");
@@ -483,6 +533,7 @@ Datatypes Variable::getDatatype()
 
 void Variable::setLockMode(unsigned int mode)
 {
+	// Guards against mode setting being invaild
 	if (mode < 0 || mode > 2)
 	{
 		throw std::invalid_argument("Not a vaild lock mode.");
