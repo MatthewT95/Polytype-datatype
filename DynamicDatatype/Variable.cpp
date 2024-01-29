@@ -40,7 +40,7 @@ Variable::Variable(const Variable& src)
 		m_value = new ListValue();
 		for (int i = 0; i < ((ListValue*)src.m_value)->size(); i++)
 		{
-			((ListValue*)m_value)->append(src.getElementCopy(i));
+			((ListValue*)m_value)->append(src.getListElementCopy(i));
 		}
 	}
 	else if (src.m_datatype == Datatypes::Dictionary)
@@ -311,7 +311,7 @@ void Variable::makeDictionarly(Datatypes dt)
 	}
 }
 
-void Variable::appendElement(Variable value)
+void Variable::appendListElement(Variable value)
 {
 	if (m_datatype == Datatypes::List)
 	{
@@ -334,7 +334,7 @@ void Variable::appendElement(Variable value)
 	}
 }
 
-Variable& Variable::getElement(unsigned int index)
+Variable& Variable::getListElement(unsigned int index)
 {
 	if (m_datatype == Datatypes::List)
 	{
@@ -346,7 +346,7 @@ Variable& Variable::getElement(unsigned int index)
 	}
 }
 
-Variable Variable::getElementCopy(unsigned int index) const
+Variable Variable::getListElementCopy(unsigned int index) const
 {
 	if (m_datatype == Datatypes::List)
 	{
@@ -358,16 +358,16 @@ Variable Variable::getElementCopy(unsigned int index) const
 	}
 }
 
-void Variable::setElement(unsigned int index, Variable value)
+void Variable::setListElement(unsigned int index, Variable value)
 {
 	if (m_datatype == Datatypes::List)
 	{
 		if (m_elementTypeLocked == false || value.getDatatype() == m_elementDatatype)
 		{
-			if (getElement(index).m_typeLocked == true)
+			if (getListElement(index).m_typeLocked == true)
 			{
 				throw std::logic_error("Variable in list at index " + std::to_string(index) + " is type locked to " +
-					datatypeName(getElement(index).getDatatype()));
+					datatypeName(getListElement(index).getDatatype()));
 			}
 			if (m_elementTypeLocked)
 			{
@@ -386,7 +386,7 @@ void Variable::setElement(unsigned int index, Variable value)
 	}
 }
 
-void Variable::removeElement(unsigned int index)
+void Variable::removeListElement(unsigned int index)
 {
 	if (m_datatype == Datatypes::List)
 	{
@@ -398,7 +398,7 @@ void Variable::removeElement(unsigned int index)
 	}
 }
 
-unsigned int Variable::getElementsCount()
+unsigned int Variable::getListElementsCount()
 {
 	if (m_datatype == Datatypes::List)
 	{
@@ -410,7 +410,7 @@ unsigned int Variable::getElementsCount()
 	}
 }
 
-void Variable::clearElements()
+void Variable::clearListElements()
 {
 	if (m_datatype == Datatypes::List)
 	{

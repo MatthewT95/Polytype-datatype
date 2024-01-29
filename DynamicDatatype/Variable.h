@@ -38,13 +38,13 @@ public:
 	void makeNone();
 
 	// List
-	void appendElement(Variable value);
-	Variable& getElement(unsigned int index);
-	Variable getElementCopy(unsigned int index) const;
-	void setElement(unsigned int index, Variable value);
-	void removeElement(unsigned int index);
-	unsigned int getElementsCount();
-	void clearElements();
+	void appendListElement(Variable value);
+	Variable& getListElement(unsigned int index);
+	Variable getListElementCopy(unsigned int index) const;
+	void setListElement(unsigned int index, Variable value);
+	void removeListElement(unsigned int index);
+	unsigned int getListElementsCount();
+	void clearListElements();
 	void fillList(unsigned int targetSize, Variable fillValue);
 
 	// Dictionarly
