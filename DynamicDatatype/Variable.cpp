@@ -118,50 +118,39 @@ Variable::Variable(bool value, int lockMode)
 
 long long Variable::getInteger() const
 {
-	if (m_datatype == Datatypes::Integer)
-	{
-		return ((IntegerValue*)m_value)->getValue();
-	}
-	else
+	if (m_datatype != Datatypes::Integer)
 	{
 		throw std::logic_error("Variable is not of type Integer.");
 	}
+	return ((IntegerValue*)m_value)->getValue();
+
 }
 
 double Variable::getFloat() const
 {
-	if (m_datatype == Datatypes::Float)
-	{
-		return ((FloatValue*)m_value)->getValue();
-	}
-	else
+	if (m_datatype != Datatypes::Float)
 	{
 		throw std::logic_error("Variable is not of type Float.");
 	}
+	return ((FloatValue*)m_value)->getValue();
 }
 
 std::string Variable::getString() const
 {
-	if (m_datatype == Datatypes::String)
-	{
-		return ((StringValue*)m_value)->getValue();
-	}
-	else
+	if (m_datatype != Datatypes::String)
 	{
 		throw std::logic_error("Variable is not of type String.");
 	}
+	return ((StringValue*)m_value)->getValue();
 }
 
 bool Variable::getBoolean() const
 {
-	if (m_datatype == Datatypes::Boolean) 
-	{
-		return ((BooleanValue*)m_value)->getValue();
-	}
-	else
+	if (m_datatype != Datatypes::Boolean)
 	{
 		throw std::logic_error("Variable is not of type Boolean.");
 	}
+	return ((BooleanValue*)m_value)->getValue();
 }
 
 bool Variable::isNone() const
@@ -171,74 +160,64 @@ bool Variable::isNone() const
 
 void Variable::setInteger(long long value)
 {
-	if (m_lockMode == 0 || m_datatype == Datatypes::Integer)
-	{
-		if (m_lockMode == 2)
-		{
-			throw std::logic_error("Variable is constant and can not be changed while value locked.");
-		}
-		delete m_value;
-		m_value = new IntegerValue(value);
-		m_datatype = Datatypes::Integer;
-	}
-	else
+	if (m_lockMode > 0 && m_datatype != Datatypes::Integer)
 	{
 		throw std::logic_error("Variable is type locked to a non Integer datatype.");
 	}
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	delete m_value;
+	m_value = new IntegerValue(value);
+	m_datatype = Datatypes::Integer;
 }
 
 void Variable::setFloat(double value)
 {
-	if (m_lockMode == 0 || m_datatype == Datatypes::Float)
-	{
-		if (m_lockMode == 2)
-		{
-			throw std::logic_error("Variable is constant and can not be changed while value locked.");
-		}
-		delete m_value;
-		m_value = new FloatValue(value);
-		m_datatype = Datatypes::Float;
-	}
-	else
+	if (m_lockMode > 0 && m_datatype != Datatypes::Float)
 	{
 		throw std::logic_error("Variable is type locked to a non Float datatype.");
 	}
+
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	delete m_value;
+	m_value = new FloatValue(value);
+	m_datatype = Datatypes::Float;
 }
 
 void Variable::setString(std::string value)
 {
-	if (m_lockMode == 0 || m_datatype == Datatypes::String)
-	{
-		if (m_lockMode == 2)
-		{
-			throw std::logic_error("Variable is constant and can not be changed while value locked.");
-		}
-		delete m_value;
-		m_value = new StringValue(value);
-		m_datatype = Datatypes::String;
-	}
-	else
+	if (m_lockMode > 0 && m_datatype != Datatypes::String)
 	{
 		throw std::logic_error("Variable is type locked to a non String datatype.");
 	}
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	delete m_value;
+	m_value = new StringValue(value);
+	m_datatype = Datatypes::String;
 }
 
 void Variable::setBoolean(bool value)
 {
-	if (m_lockMode == 0 || m_datatype == Datatypes::Boolean)
-	{
-		if (m_lockMode == 2)
-		{
-			throw std::logic_error("Variable is constant and can not be changed while value locked.");
-		}
-		delete m_value;
-		m_value = new BooleanValue(value);
-		m_datatype = Datatypes::Boolean;
-	}
-	else
+	if (m_lockMode > 0 && m_datatype != Datatypes::Boolean)
 	{
 		throw std::logic_error("Variable is type locked to a non Boolean datatype.");
 	}
+
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	delete m_value;
+	m_value = new BooleanValue(value);
+	m_datatype = Datatypes::Boolean;
 }
 
 void Variable::makeList()
