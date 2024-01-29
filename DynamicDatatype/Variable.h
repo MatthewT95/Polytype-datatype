@@ -56,8 +56,8 @@ public:
 	void clearDictionarlyKeys();
 
 	Datatypes getDatatype();
-	void lock();
-	void unlock();
+	void lockType();
+	void unlockType();
 
 	static std::string datatypeName(Datatypes dt);
 

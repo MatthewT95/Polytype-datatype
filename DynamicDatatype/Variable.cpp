@@ -319,7 +319,7 @@ void Variable::appendListElement(Variable value)
 		{
 			if (m_elementTypeLocked)
 			{
-				value.lock();
+				value.lockType();
 			}
 			((ListValue*)m_value)->append(value);
 		}
@@ -371,7 +371,7 @@ void Variable::setListElement(unsigned int index, Variable value)
 			}
 			if (m_elementTypeLocked)
 			{
-				value.lock();
+				value.lockType();
 			}
 			((ListValue*)m_value)->setElement(index, value);
 		}
@@ -482,7 +482,7 @@ void Variable::setDictionarlyElement(std::string key, Variable value)
 	{
 		if (m_elementTypeLocked == false || value.getDatatype() == m_elementDatatype)
 		{
-			value.lock();
+			value.lockType();
 			((DictionaryValue*)m_value)->setValue(key, value);
 		}
 		else
@@ -525,12 +525,12 @@ Datatypes Variable::getDatatype()
 	return m_datatype;
 }
 
-void Variable::lock()
+void Variable::lockType()
 {
 	m_typeLocked = true;
 }
 
-void Variable::unlock()
+void Variable::unlockType()
 {
 	m_typeLocked = false;
 }
@@ -586,7 +586,7 @@ Variable Variable::createList(Datatypes dt, bool locked)
 	a.makeList(dt);
 	if (locked)
 	{
-		a.lock();
+		a.lockType();
 	}
 	return a;
 }
@@ -604,7 +604,7 @@ Variable Variable::createDictionarly(Datatypes dt, bool locked)
 	a.makeDictionarly(dt);
 	if (locked)
 	{
-		a.lock();
+		a.lockType();
 	}
 	return a;
 }
