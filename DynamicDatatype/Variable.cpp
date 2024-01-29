@@ -312,18 +312,15 @@ void Variable::appendListElement(Variable value)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
-	if (m_lockMode == 0 || value.getDatatype() == m_elementDatatype)
-	{
-		if (m_elementTypeLocked)
-		{
-			value.setLockMode(1);
-		}
-		((ListValue*)m_value)->append(value);
-	}
-	else
+	if (m_lockMode != 0 && value.getDatatype() != m_elementDatatype)
 	{
 		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
+	if (m_elementTypeLocked)
+	{
+		value.setLockMode(1);
+	}
+	((ListValue*)m_value)->append(value);
 }
 
 Variable& Variable::getListElement(unsigned int index)
@@ -350,27 +347,24 @@ void Variable::setListElement(unsigned int index, Variable value)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
-	if (m_lockMode == 0 || value.getDatatype() == m_elementDatatype)
-	{
-		if (getListElement(index).m_lockMode == 1)
-		{
-			throw std::logic_error("Variable in list at index " + std::to_string(index) + " is type locked to " +
-				datatypeName(getListElement(index).getDatatype()));
-		}
-		if (getListElement(index).m_lockMode == 2)
-		{
-			throw std::logic_error("Variable is constant and can not be changed while value locked.");
-		}
-		if (m_elementTypeLocked)
-		{
-			value.setLockMode(1);
-		}
-		((ListValue*)m_value)->setElement(index, value);
-	}
-	else
+	if (m_lockMode != 0 && value.getDatatype() != m_elementDatatype)
 	{
 		throw std::logic_error("List elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
+	if (getListElement(index).m_lockMode == 1)
+	{
+		throw std::logic_error("Variable in list at index " + std::to_string(index) + " is type locked to " +
+			datatypeName(getListElement(index).getDatatype()));
+	}
+	if (getListElement(index).m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	if (m_elementTypeLocked)
+	{
+		value.setLockMode(1);
+	}
+	((ListValue*)m_value)->setElement(index, value);
 }
 
 void Variable::removeListElement(unsigned int index)
@@ -462,26 +456,20 @@ void Variable::setDictionarlyElement(std::string key, Variable value)
 
 void Variable::removeDictionarlyKey(std::string key)
 {
-	if (m_datatype == Datatypes::Dictionary)
-	{
-		((DictionaryValue*)m_value)->removeKey(key);
-	}
-	else
+	if (m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is not of type Dictionarly");
 	}
+	((DictionaryValue*)m_value)->removeKey(key);
 }
 
 void Variable::clearDictionarlyKeys()
 {
-	if (m_datatype == Datatypes::Dictionary)
-	{
-		((DictionaryValue*)m_value)->empty();
-	}
-	else
+	if (m_datatype != Datatypes::Dictionary)
 	{
 		throw std::logic_error("Variable is not of type Dictionarly");
 	}
+	((DictionaryValue*)m_value)->empty();
 }
 
 Datatypes Variable::getDatatype()
@@ -491,14 +479,11 @@ Datatypes Variable::getDatatype()
 
 void Variable::setLockMode(unsigned int mode)
 {
-	if (mode >= 0 && mode <= 2)
-	{
-		m_lockMode = mode;
-	}
-	else
+	if (mode < 0 || mode > 2)
 	{
 		throw std::invalid_argument("Not a vaild lock mode.");
 	}
+	m_lockMode = mode;
 }
 
 std::string Variable::datatypeName(Datatypes dt)
