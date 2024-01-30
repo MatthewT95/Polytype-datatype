@@ -48,6 +48,9 @@
     <ClCompile Include="QueueValue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PointerValue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VariableValue.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QueueValue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PointerValue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

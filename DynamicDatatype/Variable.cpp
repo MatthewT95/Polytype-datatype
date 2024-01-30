@@ -5,6 +5,7 @@
 #include "DictionaryValue.h"
 #include "StackValue.h"
 #include "QueueValue.h"
+#include "PointerValue.h"
 
 Variable::Variable()
 {
@@ -67,6 +68,11 @@ Variable::Variable(const Variable& src)
 		m_datatype = Datatypes::Queue;
 		m_value = new StackValue();
 		((QueueValue*)m_value)->m_valueQueue = ((QueueValue*)src.m_value)->m_valueQueue;
+	}
+	else if (src.m_datatype == Datatypes::Pointer)
+	{
+		m_datatype = Datatypes::Pointer;
+		m_value = new PointerValue(&((PointerValue*)src.m_value)->dereference());
 	}
 	else
 	{
@@ -131,6 +137,17 @@ Variable::Variable(bool value, int lockMode)
 	m_elementTypeLocked = false;
 	m_lockMode = lockMode;
 }
+
+Variable::Variable(Variable* reference)
+{
+	m_value = new PointerValue(reference);
+	m_datatype = Datatypes::Pointer;
+	m_elementDatatype = Datatypes::None;
+	m_elementTypeLocked = false;
+	m_lockMode = 0;
+}
+
+
 
 long long Variable::getInteger() const
 {
@@ -699,7 +716,7 @@ Variable& Variable::stackTop()
 
 bool Variable::QueueEmpty()
 {
-	// Guards against using Stack method on non-stack variable
+	// Guards against using Queue method on non-stack variable
 	if (m_datatype != Datatypes::Queue)
 	{
 		throw std::logic_error("Variable is not of type Queue");
@@ -709,7 +726,7 @@ bool Variable::QueueEmpty()
 
 unsigned int Variable::QueueSize()
 {
-	// Guards against using Stack method on non-stack variable
+	// Guards against using Queue method on non-stack variable
 	if (m_datatype != Datatypes::Queue)
 	{
 		throw std::logic_error("Variable is not of type Queue");
@@ -719,7 +736,7 @@ unsigned int Variable::QueueSize()
 
 void Variable::QueuePush(Variable value)
 {
-	// Guards against using Stack method on non-stack variable
+	// Guards against using Queue method on non-stack variable
 	if (m_datatype != Datatypes::Queue)
 	{
 		throw std::logic_error("Variable is not of type Queue");
@@ -734,7 +751,7 @@ void Variable::QueuePush(Variable value)
 
 Variable& Variable::QueueFront()
 {
-	// Guards against using Stack method on non-stack variable
+	// Guards against using Queue method on non-stack variable
 	if (m_datatype != Datatypes::Queue)
 	{
 		throw std::logic_error("Variable is not of type Queue");
@@ -744,12 +761,22 @@ Variable& Variable::QueueFront()
 
 Variable Variable::QueuePop()
 {
-	// Guards against using Stack method on non-stack variable
+	// Guards against using Queue method on non-stack variable
 	if (m_datatype != Datatypes::Queue)
 	{
 		throw std::logic_error("Variable is not of type Queue");
 	}
 	return ((QueueValue*)m_value)->pop();
+}
+
+Variable& Variable::pointerDereference()
+{
+	// Guards against using Pointer method on non-pointer variable
+	if (m_datatype != Datatypes::Pointer)
+	{
+		throw std::logic_error("Variable is not of type Pointer");
+	}
+	return ((PointerValue*)m_value)->dereference();
 }
 
 Datatypes Variable::getDatatype() const
@@ -1063,6 +1090,11 @@ void Variable::operator=(const Variable& other)
 		m_datatype = Datatypes::Queue;
 		m_value = new StackValue();
 		((QueueValue*)m_value)->m_valueQueue = ((QueueValue*)other.m_value)->m_valueQueue;
+	}
+	else if (other.m_datatype == Datatypes::Pointer)
+	{
+		m_datatype = Datatypes::Pointer;
+		m_value = new PointerValue(&((PointerValue*)other.m_value)->dereference());
 	}
 	else
 	{

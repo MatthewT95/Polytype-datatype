@@ -9,6 +9,7 @@ enum class Datatypes
 	Dictionary,
 	Stack,
 	Queue,
+	Pointer,
 	Error,
 	None,
 	Any

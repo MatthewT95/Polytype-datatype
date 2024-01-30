@@ -17,6 +17,7 @@ public:
 	Variable(std::string value, int lockMode = 0);
 	Variable(const char* value, int lockMode = 0);
 	Variable(bool value, int lockMode = 0);
+	Variable(Variable* reference);
 
 	long long getInteger() const;
 	double getFloat() const;
@@ -71,6 +72,9 @@ public:
 	void QueuePush(Variable value);
 	Variable& QueueFront();
 	Variable QueuePop();
+
+	// Pointer
+	Variable& pointerDereference();
 
 
 	Datatypes getDatatype() const;
