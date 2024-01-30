@@ -636,6 +636,16 @@ Variable Variable::stackPop()
 	return ((StackValue*)m_value)->pop();
 }
 
+Variable Variable::stackPeek()
+{
+	// Guards against using Stack method on non-stack variable
+	if (m_datatype != Datatypes::Stack)
+	{
+		throw std::logic_error("Variable is not of type Stack");
+	}
+	return ((StackValue*)m_value)->peek();
+}
+
 Datatypes Variable::getDatatype()
 {
 	return m_datatype;

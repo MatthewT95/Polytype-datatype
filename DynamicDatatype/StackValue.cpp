@@ -27,6 +27,11 @@ Variable StackValue::pop()
 	return top;
 }
 
+Variable StackValue::peek()
+{
+	return m_valueStack.top();
+}
+
 unsigned int StackValue::size()
 {
 	return m_valueStack.size();

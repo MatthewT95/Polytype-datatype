@@ -60,6 +60,7 @@ public:
 	unsigned int stackSize();
 	void stackPush(Variable value);
 	Variable stackPop();
+	Variable stackPeek();
 
 
 	Datatypes getDatatype();
