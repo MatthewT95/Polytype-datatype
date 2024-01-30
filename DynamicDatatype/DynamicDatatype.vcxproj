@@ -132,6 +132,7 @@
     <ClCompile Include="DictionaryValue.cpp" />
     <ClCompile Include="FloatValue.cpp" />
     <ClCompile Include="ListValue.cpp" />
+    <ClCompile Include="QueueValue.cpp" />
     <ClCompile Include="StackValue.cpp" />
     <ClCompile Include="StringValue.cpp" />
     <ClCompile Include="Variable.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="DictionaryValue.h" />
     <ClInclude Include="FloatValue.h" />
     <ClInclude Include="ListValue.h" />
+    <ClInclude Include="QueueValue.h" />
     <ClInclude Include="StackValue.h" />
     <ClInclude Include="StringValue.h" />
     <ClInclude Include="Variable.h" />

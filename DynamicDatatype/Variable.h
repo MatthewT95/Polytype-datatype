@@ -34,6 +34,8 @@ public:
 	void makeDictionarly(Datatypes dt);
 	void makeStack();
 	void makeStack(Datatypes dt);
+	void makeQueue();
+	void makeQueue(Datatypes dt);
 	void makeNone();
 	void makeError();
 
@@ -60,7 +62,14 @@ public:
 	unsigned int stackSize();
 	void stackPush(Variable value);
 	Variable stackPop();
-	Variable stackPeek();
+	Variable& stackTop();
+
+	// Queue
+	bool QueueEmpty();
+	unsigned int QueueSize();
+	void QueuePush(Variable value);
+	Variable& QueueFront();
+	Variable QueuePop();
 
 
 	Datatypes getDatatype();
@@ -74,6 +83,8 @@ public:
 	static Variable createDictionarly(Datatypes dt, bool locked = false);
 	static Variable createStack();
 	static Variable createStack(Datatypes dt, bool locked = false);
+	static Variable createQueue();
+	static Variable createQueue(Datatypes dt, bool locked = false);
 
 	void operator=(const Variable& other);
 

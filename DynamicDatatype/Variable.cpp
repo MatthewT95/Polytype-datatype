@@ -4,6 +4,7 @@
 #include "ListValue.h"
 #include "DictionaryValue.h"
 #include "StackValue.h"
+#include "QueueValue.h"
 
 Variable::Variable()
 {
@@ -60,6 +61,12 @@ Variable::Variable(const Variable& src)
 		m_datatype = Datatypes::Stack;
 		m_value = new StackValue();
 		((StackValue*)m_value)->m_valueStack = ((StackValue*)src.m_value)->m_valueStack;
+	}
+	else if (src.m_datatype == Datatypes::Queue)
+	{
+		m_datatype = Datatypes::Queue;
+		m_value = new StackValue();
+		((QueueValue*)m_value)->m_valueQueue = ((QueueValue*)src.m_value)->m_valueQueue;
 	}
 	else
 	{
@@ -391,6 +398,44 @@ void Variable::makeStack(Datatypes dt)
 	m_elementTypeLocked = true;
 }
 
+void Variable::makeQueue()
+{
+	// Guards against using changeing datatype of variable if it is type locked
+	if (m_lockMode > 0 && m_datatype != Datatypes::Queue)
+	{
+		throw std::logic_error("Variable is type locked to a non Queue datatype.");
+	}
+	// Guards against using changeing value of variable if it is value locked
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	delete m_value;
+	m_value = new QueueValue();
+	m_datatype = Datatypes::Queue;
+	m_elementDatatype = Datatypes::None;
+	m_elementTypeLocked = false;
+}
+
+void Variable::makeQueue(Datatypes dt)
+{
+	// Guards against using changeing datatype of variable if it is type locked
+	if (m_lockMode > 0 && m_datatype != Datatypes::Queue)
+	{
+		throw std::logic_error("Variable is type locked to a non Queue datatype.");
+	}
+	// Guards against using changeing value of variable if it is value locked
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Variable is constant and can not be changed while value locked.");
+	}
+	delete m_value;
+	m_value = new QueueValue();
+	m_datatype = Datatypes::Queue;
+	m_elementDatatype = dt;
+	m_elementTypeLocked = true;
+}
+
 void Variable::appendListElement(Variable value)
 {
 	// Guards against using changeing datatype of variable if it is type locked
@@ -637,14 +682,69 @@ Variable Variable::stackPop()
 	return ((StackValue*)m_value)->pop();
 }
 
-Variable Variable::stackPeek()
+Variable& Variable::stackTop()
 {
 	// Guards against using Stack method on non-stack variable
 	if (m_datatype != Datatypes::Stack)
 	{
 		throw std::logic_error("Variable is not of type Stack");
 	}
-	return ((StackValue*)m_value)->peek();
+	return ((StackValue*)m_value)->top();
+}
+
+bool Variable::QueueEmpty()
+{
+	// Guards against using Stack method on non-stack variable
+	if (m_datatype != Datatypes::Queue)
+	{
+		throw std::logic_error("Variable is not of type Queue");
+	}
+	return ((QueueValue*)m_value)->isEmpty();
+}
+
+unsigned int Variable::QueueSize()
+{
+	// Guards against using Stack method on non-stack variable
+	if (m_datatype != Datatypes::Queue)
+	{
+		throw std::logic_error("Variable is not of type Queue");
+	}
+	return ((QueueValue*)m_value)->size();
+}
+
+void Variable::QueuePush(Variable value)
+{
+	// Guards against using Stack method on non-stack variable
+	if (m_datatype != Datatypes::Queue)
+	{
+		throw std::logic_error("Variable is not of type Queue");
+	}
+	// Guards against pushing value that does not match element type when elements are type locked
+	if (m_elementTypeLocked == true && value.getDatatype() != m_elementDatatype)
+	{
+		throw std::logic_error("Queue elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
+	}
+	return ((QueueValue*)m_value)->push(value);
+}
+
+Variable& Variable::QueueFront()
+{
+	// Guards against using Stack method on non-stack variable
+	if (m_datatype != Datatypes::Queue)
+	{
+		throw std::logic_error("Variable is not of type Queue");
+	}
+	return ((QueueValue*)m_value)->front();
+}
+
+Variable Variable::QueuePop()
+{
+	// Guards against using Stack method on non-stack variable
+	if (m_datatype != Datatypes::Queue)
+	{
+		throw std::logic_error("Variable is not of type Queue");
+	}
+	return ((QueueValue*)m_value)->pop();
 }
 
 Datatypes Variable::getDatatype()
@@ -762,6 +862,24 @@ Variable Variable::createStack(Datatypes dt, bool locked)
 	return a;
 }
 
+Variable Variable::createQueue()
+{
+	Variable a;
+	a.makeQueue();
+	return a;
+}
+
+Variable Variable::createQueue(Datatypes dt, bool locked)
+{
+	Variable a;
+	a.makeQueue(dt);
+	if (locked)
+	{
+		a.setLockMode(1);
+	}
+	return a;
+}
+
 void Variable::operator=(const Variable& other)
 {
 	if (other.m_datatype == Datatypes::Integer)
@@ -808,6 +926,12 @@ void Variable::operator=(const Variable& other)
 		m_datatype = Datatypes::Stack;
 		m_value = new StackValue();
 		((StackValue*)m_value)->m_valueStack = ((StackValue*)other.m_value)->m_valueStack;
+	}
+	else if (other.m_datatype == Datatypes::Queue)
+	{
+		m_datatype = Datatypes::Queue;
+		m_value = new StackValue();
+		((QueueValue*)m_value)->m_valueQueue = ((QueueValue*)other.m_value)->m_valueQueue;
 	}
 	else
 	{
