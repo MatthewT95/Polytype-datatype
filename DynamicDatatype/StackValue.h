@@ -17,6 +17,7 @@ public:
 	unsigned int size();
 	bool isEmpty();
 
+	friend class Variable;
 private:
 	std::stack<Variable> m_valueStack;
 };

@@ -59,6 +59,7 @@ Variable::Variable(const Variable& src)
 	{
 		m_datatype = Datatypes::Stack;
 		m_value = new StackValue();
+		((StackValue*)m_value)->m_valueStack = ((StackValue*)src.m_value)->m_valueStack;
 	}
 	else
 	{
@@ -801,6 +802,12 @@ void Variable::operator=(const Variable& other)
 		{
 			this->setDictionarlyElement(key, ((DictionaryValue*)other.m_value)->getValue(key));
 		}
+	}
+	else if (other.m_datatype == Datatypes::Stack)
+	{
+		m_datatype = Datatypes::Stack;
+		m_value = new StackValue();
+		((StackValue*)m_value)->m_valueStack = ((StackValue*)other.m_value)->m_valueStack;
 	}
 	else
 	{
