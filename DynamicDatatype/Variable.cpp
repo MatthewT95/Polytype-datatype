@@ -752,7 +752,7 @@ Variable Variable::QueuePop()
 	return ((QueueValue*)m_value)->pop();
 }
 
-Datatypes Variable::getDatatype()
+Datatypes Variable::getDatatype() const
 {
 	return m_datatype;
 }
@@ -1005,6 +1005,14 @@ Variable Variable::createQueue(Datatypes dt, bool locked)
 
 void Variable::operator=(const Variable& other)
 {
+	if (m_lockMode > 0 && m_datatype != other.getDatatype())
+	{
+		throw std::logic_error("Can not assign value of differnt type to type locked variable.");
+	}
+	if (m_lockMode == 2)
+	{
+		throw std::logic_error("Can not assign value to a value locked variable.");
+	}
 	if (other.m_datatype == Datatypes::Integer)
 	{
 		m_datatype = Datatypes::Integer;
@@ -1062,7 +1070,6 @@ void Variable::operator=(const Variable& other)
 		m_datatype = Datatypes::None;
 	}
 
-	m_lockMode = 0;
 	m_elementDatatype = other.m_elementDatatype;
 	m_elementTypeLocked = other.m_elementTypeLocked;
 }

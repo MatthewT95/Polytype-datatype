@@ -73,7 +73,7 @@ public:
 	Variable QueuePop();
 
 
-	Datatypes getDatatype();
+	Datatypes getDatatype() const;
 	void setLockMode(unsigned int mode);
 
 	static Variable castInterger(Variable value);
