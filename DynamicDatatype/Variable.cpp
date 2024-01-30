@@ -762,6 +762,124 @@ void Variable::setLockMode(unsigned int mode)
 	m_lockMode = mode;
 }
 
+Variable Variable::castInterger(Variable value)
+{
+	
+	if (value.getDatatype() == Datatypes::Integer)
+	{
+		return value;
+	}
+	else if (value.getDatatype() == Datatypes::Float)
+	{
+		return Variable((int)value.getFloat());
+	}
+	else if (value.getDatatype() == Datatypes::String)
+	{
+		return Variable(std::stoi(value.getString()));
+	}
+	else if (value.getDatatype() == Datatypes::Boolean)
+	{
+		return Variable(value.getBoolean()?1:0);
+	}
+	else
+	{
+		Variable ans;
+		ans.makeError();
+		return ans;
+	}
+}
+
+Variable Variable::castFloat(Variable value)
+{
+	if (value.getDatatype() == Datatypes::Integer)
+	{
+		return Variable((float)value.getInteger());
+	}
+	else if (value.getDatatype() == Datatypes::Float)
+	{
+		return value;
+	}
+	else if (value.getDatatype() == Datatypes::String)
+	{
+		return Variable(std::stof(value.getString()));
+	}
+	else if (value.getDatatype() == Datatypes::Boolean)
+	{
+		return Variable(value.getBoolean() ? 1.0 : 0.0);
+	}
+	else
+	{
+		Variable ans;
+		ans.makeError();
+		return ans;
+	}
+}
+
+Variable Variable::castString(Variable value)
+{
+	if (value.getDatatype() == Datatypes::Integer)
+	{
+		return Variable(std::to_string(value.getInteger()));
+	}
+	else if (value.getDatatype() == Datatypes::Float)
+	{
+		return Variable(std::to_string(value.getFloat()));
+	}
+	else if (value.getDatatype() == Datatypes::String)
+	{
+		return value;
+	}
+	else if (value.getDatatype() == Datatypes::Boolean)
+	{
+		return Variable(value.getBoolean() ? "true" : "false");
+	}
+	else
+	{
+		Variable ans;
+		ans.makeError();
+		return ans;
+	}
+}
+
+Variable Variable::castBoolean(Variable value)
+{
+	if (value.getDatatype() == Datatypes::Integer)
+	{
+		return Variable(value.getInteger()>0?true:false);
+	}
+	else if (value.getDatatype() == Datatypes::Float)
+	{
+		return Variable(value.getFloat() > 0 ? true : false);
+	}
+	else if (value.getDatatype() == Datatypes::String)
+	{
+		if (value.getString() == "true" || value.getString() == "True")
+		{
+			return Variable(true);
+		}
+		else if (value.getString() == "false" || value.getString() == "False")
+		{
+			return Variable(false);
+		}
+		else
+		{
+			Variable ans;
+			ans.makeError();
+			return ans;
+		}
+	}
+	else if (value.getDatatype() == Datatypes::Boolean)
+	{
+		return value;
+	}
+	else
+	{
+		Variable ans;
+		ans.makeError();
+		return ans;
+	}
+}
+
 std::string Variable::datatypeName(Datatypes dt)
 {
 	if (dt == Datatypes::Integer)
@@ -970,13 +1088,10 @@ Variable operator+(const Variable& lhs, const Variable& rhs)
 	else
 	{
 		Variable ans;
-		if (lhs.m_datatype == Datatypes::Integer && rhs.m_datatype == Datatypes::Float)
+		if (lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer 
+			&& lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float)
 		{
-			ans.setFloat(lhs.getInteger() + rhs.getFloat());
-		}
-		else if (lhs.m_datatype == Datatypes::Float && rhs.m_datatype == Datatypes::Integer)
-		{
-			ans.setFloat(lhs.getFloat() + rhs.getInteger());
+			ans.setFloat((Variable::castFloat(lhs)+ Variable::castFloat(rhs)).getFloat());
 		}
 		else
 		{
@@ -1008,18 +1123,14 @@ Variable operator-(const Variable& lhs, const Variable& rhs)
 	else
 	{
 		Variable ans;
-		if (lhs.m_datatype == Datatypes::Integer && rhs.m_datatype == Datatypes::Float)
+		if (lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer
+			&& lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float)
 		{
-			ans.setFloat(lhs.getInteger() - rhs.getFloat());
-		}
-		else if (lhs.m_datatype == Datatypes::Float && rhs.m_datatype == Datatypes::Integer)
-		{
-			ans.setFloat(lhs.getFloat() - rhs.getInteger());
+			ans.setFloat((Variable::castFloat(lhs) - Variable::castFloat(rhs)).getFloat());
 		}
 		else
 		{
 			ans.makeError();
 		}
-		return ans;
 	}
 }

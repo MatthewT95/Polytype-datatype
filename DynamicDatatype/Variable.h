@@ -75,6 +75,11 @@ public:
 	Datatypes getDatatype();
 	void setLockMode(unsigned int mode);
 
+	static Variable castInterger(Variable value);
+	static Variable castFloat(Variable value);
+	static Variable castString(Variable value);
+	static Variable castBoolean(Variable value);
+
 	static std::string datatypeName(Datatypes dt);
 
 	static Variable createList();
