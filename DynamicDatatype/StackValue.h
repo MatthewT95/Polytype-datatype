@@ -13,7 +13,7 @@ public:
 
 	void push(Variable value);
 	Variable pop();
-	Variable peek();
+	Variable& top();
 	unsigned int size();
 	bool isEmpty();
 

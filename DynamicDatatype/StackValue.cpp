@@ -27,7 +27,7 @@ Variable StackValue::pop()
 	return top;
 }
 
-Variable StackValue::peek()
+Variable& StackValue::top()
 {
 	return m_valueStack.top();
 }
