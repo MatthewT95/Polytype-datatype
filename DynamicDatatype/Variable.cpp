@@ -55,6 +55,11 @@ Variable::Variable(const Variable& src)
 			this->setDictionarlyElement(key,((DictionaryValue*)src.m_value)->getValue(key));
 		}
 	}
+	else if (src.m_datatype == Datatypes::Stack)
+	{
+		m_datatype = Datatypes::Stack;
+		m_value = new StackValue();
+	}
 	else
 	{
 		m_value = nullptr;
@@ -671,6 +676,10 @@ std::string Variable::datatypeName(Datatypes dt)
 	else if (dt == Datatypes::Dictionary)
 	{
 		return "Dictionary";
+	}
+	else if (dt == Datatypes::Stack)
+	{
+		return "Stack";
 	}
 	else if (dt == Datatypes::Error)
 	{
