@@ -1,6 +1,9 @@
 #include "Variable.h"
 #include <stdexcept>
 #include <iostream>
+#include "ListValue.h"
+#include "DictionaryValue.h"
+#include "StackValue.h"
 
 Variable::Variable()
 {
