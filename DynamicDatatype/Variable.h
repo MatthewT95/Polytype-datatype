@@ -23,6 +23,7 @@ public:
 	std::string getString() const;
 	bool getBoolean() const;
 	bool isNone() const;
+	bool isError() const;
 
 	void setInteger(long long value);
 	void setFloat(double value);

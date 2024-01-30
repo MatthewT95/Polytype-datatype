@@ -178,6 +178,11 @@ bool Variable::isNone() const
 	return m_datatype==Datatypes::None;
 }
 
+bool Variable::isError() const
+{
+	return m_datatype==Datatypes::Error;
+}
+
 void Variable::setInteger(long long value)
 {
 	// Guards against using changing datatype of variable if it is locked
