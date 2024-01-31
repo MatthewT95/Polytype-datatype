@@ -1,5 +1,5 @@
 # Datatypes
-
+[Integer](#integer)
 ## Single value types
 
 ### Integer
