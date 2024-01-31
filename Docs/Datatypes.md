@@ -120,6 +120,45 @@ a.getString() // returns bool with value false
 ## Collection datatypes
 
 ### List
+The list type can store a collection of Variables in indexable list. A list can be locked to store only store elements of a specific datatype.
+
+Header:
+```cpp
+// Makes target variable a empty list
+void makeList();
+// Makes target variable a empty list locked to specific datatype
+void makeList(Datatypes dt);
+// Returns an empty list.
+// Use when appending a element to list or dictionarly that has its elements
+//   locked to list type
+static Variable createList();
+// Returns an empty list locked to a specific datatype
+// Use when appending a element to list or dictionarly that has its elements
+//   locked to list type
+static Variable createList(Datatypes dt, bool locked = false);
+// Appends a Variable to the list
+// We throw exception if list is type locked to a type different then the value
+void appendListElement(Variable value);
+// Returns a Variable reference to a list element
+Variable& getListElement(unsigned int index);
+// Returns a Variable value of list element
+Variable getListElementCopy(unsigned int index) const;
+// Updates the value of an element at given index
+// We throw exception if list is type locked to a type different then the value
+void setListElement(unsigned int index, Variable value);
+// Removes an element at given index in list
+void removeListElement(unsigned int index);
+// Returns the total number of elements in the list
+unsigned int getListElementsCount();
+// Removes all elements from list
+void clearListElements();
+// Adds elements of fillValue untill list reaches target size
+void fillList(unsigned int targetSize, Variable fillValue);
+// Repeatly removes last element until list reaches target size
+void pruneList(unsigned int targetSize);
+// If variable if of type list, this well return a reference to element at given index
+Variable& operator[](unsigned int index);
+```
 
 ### Dictionary
 
