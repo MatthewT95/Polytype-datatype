@@ -31,5 +31,5 @@ This repo provides a class Variable, which can store several different datatypes
 
 ## Documentation
 
-[Datatypes](Docs/datatypes.md)
+[Datatypes](Docs/Datatypes.md)
 
