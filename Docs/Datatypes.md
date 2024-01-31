@@ -12,6 +12,7 @@
 The integer datatype stores a single whole number which can be negative,positive or zero.
 
 Header:
+
 ```cpp
 // Creates a new Integer Variable with given value and lockmode
 Variable(int value, int lockMode = 0);
@@ -25,7 +26,9 @@ long long getInteger() const;
 // casts a variable to type integer
 static Variable castInterger(Variable value);
 ```
+
 Examples:
+
 ```cpp
 Variable(20); // Creates a integer variable with value of 20
 Variable(32,1); // Creates a integer Variable that is locked to the integer type with a value of 32
@@ -41,6 +44,7 @@ a.getInterger(); // returns int with value 20
 The float datatype stores a single real number which can be negative,positive or zero.
 
 Header:
+
 ```cpp
 // Creates a new float Variable with given value and lockmode
 Variable(double value, int lockMode = 0);
@@ -54,7 +58,9 @@ double getFloat() const;
 // casts a variable to type float
 static Variable castFloat(Variable value);
 ```
+
 Examples:
+
 ```cpp
 Variable(22.5); // Creates a float variable with value of 20.5
 Variable(32.6,1); // Creates a float Variable that is locked to the float type with a value of 32.6
@@ -70,6 +76,7 @@ a.getFloat(); // returns double with value 30.34
 The string datatype stores a string of text.
 
 Header:
+
 ```cpp
 // Creates a new string Variable with given value and lockmode
 Variable(std::string value, int lockMode = 0);
@@ -83,7 +90,9 @@ std::string getString() const;
 // casts a variable to type string
 static Variable castString(Variable value);
 ```
+
 Examples:
+
 ```cpp
 Variable("apple"); // Creates a float variable with value of "apple"
 Variable("pizza",1); // Creates a string Variable that is locked to the string type with a value of "pizza"
@@ -99,6 +108,7 @@ a.getString() // returns std::string with value "pie"
 The boolean datatype stores a true or false value.
 
 Header:
+
 ```cpp
 // Creates a new boolean Variable with given value and lockmode
 Variable(bool value, int lockMode = 0);
@@ -113,6 +123,7 @@ bool getBoolean() const;
 static Variable castBoolean(Variable value);
 ```
 Examples:
+
 ```cpp
 Variable(true); // Creates a boolean variable with value of true
 Variable(false,1); // Creates a boolean Variable that is locked to the string type with a value of false
@@ -129,6 +140,7 @@ a.getString() // returns bool with value false
 The list type can store a collection of Variables in indexable list. A list can be locked to store only store elements of a specific datatype.
 
 Header:
+
 ```cpp
 // Makes target variable a empty list
 void makeList();
@@ -167,6 +179,7 @@ Variable& operator[](unsigned int index);
 ```
 
 **Creating a new list**
+
 ```cpp
 Variable a;
 Variable b;
@@ -197,11 +210,14 @@ std::cout << list.getListElement(0).getString() << "\n";
 // Access list using []
 std::cout << list[1][0].getInteger() << "\n";
 ```
+
 output
+
 ```
 Apple
 12
 ```
+
 ### Dictionary
 
 ### Stack
