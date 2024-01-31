@@ -30,18 +30,15 @@ public:
 	void setFloat(double value);
 	void setString(std::string value);
 	void setBoolean(bool value);
-	void makeList();
-	void makeList(Datatypes dt);
-	void makeDictionarly();
-	void makeDictionarly(Datatypes dt);
-	void makeStack();
-	void makeStack(Datatypes dt);
-	void makeQueue();
-	void makeQueue(Datatypes dt);
+	
 	void makeNone();
 	void makeError();
 
 	// List
+	void makeList();
+	void makeList(Datatypes dt);
+	static Variable createList();
+	static Variable createList(Datatypes dt, bool locked = false);
 	void appendListElement(Variable value);
 	Variable& getListElement(unsigned int index);
 	Variable getListElementCopy(unsigned int index) const;
@@ -53,6 +50,10 @@ public:
 	void pruneList(unsigned int targetSize);
 
 	// Dictionarly
+	void makeDictionarly();
+	void makeDictionarly(Datatypes dt);
+	static Variable createDictionarly();
+	static Variable createDictionarly(Datatypes dt, bool locked = false);
 	bool keyExists(std::string key);
 	Variable& getDictionarlyElement(std::string key);
 	void setDictionarlyElement(std::string key, Variable value);
@@ -60,6 +61,10 @@ public:
 	void clearDictionarlyKeys();
 
 	// Stack
+	void makeStack();
+	void makeStack(Datatypes dt);
+	static Variable createStack();
+	static Variable createStack(Datatypes dt, bool locked = false);
 	bool isStackEmpty();
 	unsigned int stackSize();
 	void stackPush(Variable value);
@@ -67,6 +72,10 @@ public:
 	Variable& stackTop();
 
 	// Queue
+	void makeQueue();
+	void makeQueue(Datatypes dt);
+	static Variable createQueue();
+	static Variable createQueue(Datatypes dt, bool locked = false);
 	bool QueueEmpty();
 	unsigned int QueueSize();
 	void QueuePush(Variable value);
@@ -86,15 +95,6 @@ public:
 	static Variable castBoolean(Variable value);
 
 	static std::string datatypeName(Datatypes dt);
-
-	static Variable createList();
-	static Variable createList(Datatypes dt, bool locked = false);
-	static Variable createDictionarly();
-	static Variable createDictionarly(Datatypes dt, bool locked = false);
-	static Variable createStack();
-	static Variable createStack(Datatypes dt, bool locked = false);
-	static Variable createQueue();
-	static Variable createQueue(Datatypes dt, bool locked = false);
 
 	Variable& operator[](unsigned int index);
 	Variable& operator[](std::string key);
