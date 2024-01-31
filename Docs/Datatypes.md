@@ -6,7 +6,7 @@
 [Boolean](#boolean)
 [List](#list)
 
-## Single value types
+## Value types
 
 ### Integer
 
@@ -138,6 +138,7 @@ a.getString(); // returns bool with value false
 ## Collection datatypes
 
 ### List
+
 The list type can store a collection of Variables, which are index. A list can be locked to store only store elements of a specific datatype.
 
 Header:
@@ -196,6 +197,7 @@ Variable d = Variable::createList(Datatypes::boolean);
 ```
 
 **Appending, setting and accessing list elements**
+
 ```cpp
 // Creates a new list
 Variable list=Variable::createList();
