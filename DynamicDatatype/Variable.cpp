@@ -485,6 +485,10 @@ Variable& Variable::getListElement(unsigned int index)
 	{
 		throw std::logic_error("Variable is not of type List");
 	}
+	if (index < 0 || index >= ((ListValue*)m_value)->size())
+	{
+		throw std::out_of_range("Index is outside bounds of list.");
+	}
 	return ((ListValue*)m_value)->getElement(index);
 }
 
