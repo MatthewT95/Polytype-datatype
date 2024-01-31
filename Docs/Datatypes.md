@@ -138,7 +138,7 @@ a.getString(); // returns bool with value false
 ## Collection datatypes
 
 ### List
-The list type can store a collection of Variables in indexable list. A list can be locked to store only store elements of a specific datatype.
+The list type can store a collection of Variables, which are index. A list can be locked to store only store elements of a specific datatype.
 
 Header:
 
