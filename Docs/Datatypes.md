@@ -37,7 +37,7 @@ Variable(40,2); // Creates a constant with value of 40
 
 Variable a(20);
 a.setInteger(20) // Sets value to Integer 20
-a.getInterger(); // returns int with value 20
+a.getInteger(); // returns int with value 20
 ```
 
 ### Float
