@@ -190,7 +190,7 @@ list.appendListElement(Variable("Apple"));
 // Appends empty list to list
 list.appendListElement(Variable::createList());
 // Appends integer 12 to nested list
-list[1].appendElement(Variable(12));
+list[1].appendListElement(Variable(12));
 
 // Accesses list using getListElement
 std::cout << list.getListElement(0).getString() << "\n";
