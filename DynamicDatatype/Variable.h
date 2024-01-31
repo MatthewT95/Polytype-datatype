@@ -96,6 +96,10 @@ public:
 	static Variable createQueue();
 	static Variable createQueue(Datatypes dt, bool locked = false);
 
+	Variable& operator[](unsigned int index);
+	Variable& operator[](std::string key);
+
+
 	void operator=(const Variable& other);
 
 	// Arithmetic Operators

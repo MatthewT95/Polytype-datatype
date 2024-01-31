@@ -1030,6 +1030,30 @@ Variable Variable::createQueue(Datatypes dt, bool locked)
 	return a;
 }
 
+Variable& Variable::operator[](unsigned int index)
+{
+	if (m_datatype == Datatypes::List)
+	{
+		return getListElement(index);
+	}
+	else
+	{
+		throw std::logic_error(datatypeName(m_datatype) + " is not a indexable collection.");
+	}
+}
+
+Variable& Variable::operator[](std::string key)
+{
+	if (m_datatype == Datatypes::Dictionary)
+	{
+		return getDictionarlyElement(key);
+	}
+	else
+	{
+		throw std::logic_error(datatypeName(m_datatype) + " is not a indexable collection.");
+	}
+}
+
 void Variable::operator=(const Variable& other)
 {
 	if (m_lockMode > 0 && m_datatype != other.getDatatype())
