@@ -25,7 +25,7 @@ void setInteger(long long value);
 // If not of type integer exception will be throw
 long long getInteger() const;
 // casts a variable to type integer
-static Variable castInterger(Variable value);
+static Variable castInteger(Variable value);
 ```
 
 Examples:
