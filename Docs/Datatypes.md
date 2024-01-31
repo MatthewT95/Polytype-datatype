@@ -156,7 +156,7 @@ void clearListElements();
 void fillList(unsigned int targetSize, Variable fillValue);
 // Repeatly removes last element until list reaches target size
 void pruneList(unsigned int targetSize);
-// If variable is of type list, this well return a reference to element at given index
+// If variable is of type list, this will return a reference to element at given index
 Variable& operator[](unsigned int index);
 ```
 
