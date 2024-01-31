@@ -166,6 +166,17 @@ void pruneList(unsigned int targetSize);
 Variable& operator[](unsigned int index);
 ```
 
+Examples:
+```cpp
+// Creating a new list
+Variable a;
+Variable b;
+a.makeList();
+b.makeList(Datatypes::Integer);
+
+Variable c = Variable::createList();
+Variable d = Variable::createList(Datatypes::boolean);
+```
 ### Dictionary
 
 ### Stack
