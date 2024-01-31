@@ -1,5 +1,11 @@
 # Datatypes
+
 [Integer](#integer)
+[Float](#float)
+[String](#string)
+[Boolean](#boolean)
+[List](#list)
+
 ## Single value types
 
 ### Integer
