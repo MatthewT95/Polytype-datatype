@@ -13,7 +13,7 @@ This repo provides a class Variable, which can store several different datatypes
 
 ## Features
 
-- Static and dyanamic typing
+- Static and dynamic typing
 - Variables and constants
 - Collections such Lists, Dictionaries, Stacks and queues.
 - Nestabllity of collections
