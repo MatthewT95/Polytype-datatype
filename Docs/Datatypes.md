@@ -166,16 +166,41 @@ void pruneList(unsigned int targetSize);
 Variable& operator[](unsigned int index);
 ```
 
-Examples:
+**Creating a new list**
 ```cpp
-// Creating a new list
 Variable a;
 Variable b;
+// Makes a empty list
 a.makeList();
+// Makes b an empty list locked to integers
 b.makeList(Datatypes::Integer);
 
+// Declares c to be an empty list
 Variable c = Variable::createList();
+// Declares d to be an empty list locked to booleans
 Variable d = Variable::createList(Datatypes::boolean);
+```
+
+**Appending, setting and accessing list elements**
+```cpp
+// Creates a new list
+Variable list=Variable::createList();
+// Appends string value to list
+list.appendListElement(Variable("Apple"));
+// Appends empty list to list
+list.appendListElement(Variable::createList());
+// Appends integer 12 to nested list
+list[1].appendElement(Variable(12));
+
+// Accesses list using getListElement
+std::cout << list.getListElement(0).getString() << "\n";
+// Access list using []
+std::cout << list[1][0].getInteger() << "\n";
+```
+output
+```
+Apple
+12
 ```
 ### Dictionary
 
