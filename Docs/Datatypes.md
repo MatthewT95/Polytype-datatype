@@ -131,7 +131,7 @@ a.getString() // returns bool with value false
 
 ### Pointer
 
-## Speaial datatypes
+## Special datatypes
 
 ### None
 
