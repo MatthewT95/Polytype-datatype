@@ -36,7 +36,7 @@ Variable(32,1); // Creates a integer Variable that is locked to the integer type
 Variable(40,2); // Creates a constant with value of 40
 
 Variable a(20);
-a.setInteger(20) // Sets value to Integer 20
+a.setInteger(20); // Sets value to Integer 20
 a.getInteger(); // returns int with value 20
 ```
 
@@ -68,7 +68,7 @@ Variable(32.6,1); // Creates a float Variable that is locked to the float type w
 Variable(40.5,2); // Creates a constant with value of 40.5.
 
 Variable a(20.67);
-a.setFloat(30.34) // Sets value to Float 30.34
+a.setFloat(30.34); // Sets value to Float 30.34
 a.getFloat(); // returns double with value 30.34
 ```
 
@@ -100,8 +100,8 @@ Variable("pizza",1); // Creates a string Variable that is locked to the string t
 Variable("fruit",2); // Creates a constant with value of "fruit".
 
 Variable a("orange");
-a.setString("pie") // Sets value to string "pie"
-a.getString() // returns std::string with value "pie"
+a.setString("pie"); // Sets value to string "pie"
+a.getString(); // returns std::string with value "pie"
 ```
 
 ### Boolean
@@ -131,8 +131,8 @@ Variable(false,1); // Creates a boolean Variable that is locked to the string ty
 Variable(true,2); // Creates a constant with value of true.
 
 Variable a(true);
-a.setString(false) // Sets value to boolean false
-a.getString() // returns bool with value false
+a.setString(false); // Sets value to boolean false
+a.getString(); // returns bool with value false
 ```
 
 ## Collection datatypes
