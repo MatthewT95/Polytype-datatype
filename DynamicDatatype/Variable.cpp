@@ -1204,5 +1204,77 @@ Variable operator-(const Variable& lhs, const Variable& rhs)
 		{
 			ans.makeError();
 		}
+		return ans;
+	}
+}
+
+Variable operator*(const Variable& lhs, const Variable& rhs)
+{
+	if (lhs.m_datatype == rhs.m_datatype)
+	{
+		Variable ans;
+		if (lhs.m_datatype == Datatypes::Integer)
+		{
+			ans.setInteger(lhs.getInteger() * rhs.getInteger());
+		}
+		else if (lhs.m_datatype == Datatypes::Float)
+		{
+			ans.setFloat(lhs.getFloat() * rhs.getFloat());
+		}
+		else
+		{
+			ans.makeError();
+		}
+		return ans;
+	}
+	else
+	{
+		Variable ans;
+		if (lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer
+			&& lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float)
+		{
+			ans.setFloat((Variable::castFloat(lhs) * Variable::castFloat(rhs)).getFloat());
+		}
+		else
+		{
+			ans.makeError();
+		}
+		return ans;
+	}
+}
+
+Variable operator/(const Variable& lhs, const Variable& rhs)
+{
+	if (lhs.m_datatype == rhs.m_datatype)
+	{
+		Variable ans;
+		if (lhs.m_datatype == Datatypes::Integer)
+		{
+			ans.setInteger(lhs.getInteger() / rhs.getInteger());
+		}
+		else if (lhs.m_datatype == Datatypes::Float)
+		{
+			ans.setFloat(lhs.getFloat() / rhs.getFloat());
+		}
+		else
+		{
+			ans.makeError();
+		}
+		return ans;
+	}
+	else
+	{
+		Variable ans;
+		if (lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer
+			&& lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float)
+		{
+			ans.setFloat((Variable::castFloat(lhs) / Variable::castFloat(rhs)).getFloat());
+		}
+		else
+		{
+			ans.makeError();
+		}
+
+		return ans;
 	}
 }

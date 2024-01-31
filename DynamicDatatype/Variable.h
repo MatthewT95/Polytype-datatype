@@ -105,6 +105,8 @@ public:
 	// Arithmetic Operators
 	friend Variable operator+(const Variable& lhs, const Variable& rhs);
 	friend Variable operator-(const Variable& lhs, const Variable& rhs);
+	friend Variable operator*(const Variable& lhs, const Variable& rhs);
+	friend Variable operator/(const Variable& lhs, const Variable& rhs);
 
 private:
 	VariableValue* m_value; // Pointer to the value stored in the variable
