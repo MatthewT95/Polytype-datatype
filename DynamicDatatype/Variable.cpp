@@ -1160,8 +1160,8 @@ Variable operator+(const Variable& lhs, const Variable& rhs)
 	else
 	{
 		Variable ans;
-		if (lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer 
-			&& lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float)
+		if ((lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer)
+			&& (lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float))
 		{
 			ans.setFloat((Variable::castFloat(lhs)+ Variable::castFloat(rhs)).getFloat());
 		}
@@ -1195,8 +1195,8 @@ Variable operator-(const Variable& lhs, const Variable& rhs)
 	else
 	{
 		Variable ans;
-		if (lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer
-			&& lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float)
+		if ((lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer)
+			&& (lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float))
 		{
 			ans.setFloat((Variable::castFloat(lhs) - Variable::castFloat(rhs)).getFloat());
 		}
@@ -1230,8 +1230,8 @@ Variable operator*(const Variable& lhs, const Variable& rhs)
 	else
 	{
 		Variable ans;
-		if (lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer
-			&& lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float)
+		if ((lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer)
+			&& (lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float))
 		{
 			ans.setFloat((Variable::castFloat(lhs) * Variable::castFloat(rhs)).getFloat());
 		}
@@ -1265,8 +1265,8 @@ Variable operator/(const Variable& lhs, const Variable& rhs)
 	else
 	{
 		Variable ans;
-		if (lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer
-			&& lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float)
+		if ((lhs.m_datatype == Datatypes::Integer || rhs.m_datatype == Datatypes::Integer)
+			&& (lhs.m_datatype == Datatypes::Float || rhs.m_datatype == Datatypes::Float))
 		{
 			ans.setFloat((Variable::castFloat(lhs) / Variable::castFloat(rhs)).getFloat());
 		}
