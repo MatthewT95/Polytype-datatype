@@ -9,6 +9,7 @@
 ## Single value types
 
 ### Integer
+
 The integer datatype stores a single whole number which can be negative,positive or zero.
 
 Header:
