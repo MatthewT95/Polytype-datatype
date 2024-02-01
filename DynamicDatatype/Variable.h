@@ -70,22 +70,22 @@ public:
 
 	// Dictionarly
 	// Makes a variable a unlocked empty dictionary
-	void makeDictionarly();
+	void makeDictionary();
 	// Makes a variable a empty dictionary with elements lock to a given type
-	void makeDictionarly(Datatypes dt);
+	void makeDictionary(Datatypes dt);
 	// Creates an empty dictionary that is unlocked
-	static Variable createDictionarly();
+	static Variable createDictionary();
 	// Creates an empty dictionary that lock to a given type.
 	//	also allows you have the variable type locked to dictionary
-	static Variable createDictionarly(Datatypes dt, bool locked = false);
+	static Variable createDictionary(Datatypes dt, bool locked = false);
 	// Checks if a given key exists in the dictionary
 	bool keyExists(std::string key);
 	// Returns a reference to a dictionary value
-	Variable& getDictionarlyElement(std::string key);
+	Variable& getDictionaryElement(std::string key);
 	// Sets the value of a dictionary element with given key
-	void setDictionarlyElement(std::string key, Variable value);
+	void setDictionaryElement(std::string key, Variable value);
 	// Deletes a key value pair
-	void removeDictionarlyKey(std::string key);
+	void removeDictionaryKey(std::string key);
 	// Deletes all key value pairs
 	void clearDictionarlyKeys();
 

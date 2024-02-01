@@ -54,7 +54,7 @@ Variable::Variable(const Variable& src)
 
 		for (std::string key : ((DictionaryValue*)src.m_value)->getKeys())
 		{
-			this->setDictionarlyElement(key,((DictionaryValue*)src.m_value)->getValue(key));
+			this->setDictionaryElement(key,((DictionaryValue*)src.m_value)->getValue(key));
 		}
 	}
 	else if (src.m_datatype == Datatypes::Stack)
@@ -344,7 +344,7 @@ void Variable::makeError()
 	m_elementTypeLocked = false;
 }
 
-void Variable::makeDictionarly()
+void Variable::makeDictionary()
 {
 	// Guards against using changeing datatype of variable if it is type locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::Dictionary)
@@ -363,7 +363,7 @@ void Variable::makeDictionarly()
 	m_elementTypeLocked = false;
 }
 
-void Variable::makeDictionarly(Datatypes dt)
+void Variable::makeDictionary(Datatypes dt)
 {
 	// Guards against using changeing datatype of variable if it is type locked
 	if (m_lockMode > 0 && m_datatype != Datatypes::Dictionary)
@@ -609,7 +609,7 @@ bool Variable::keyExists(std::string key)
 	return ((DictionaryValue*)m_value)->keyExists(key);
 }
 
-Variable& Variable::getDictionarlyElement(std::string key)
+Variable& Variable::getDictionaryElement(std::string key)
 {
 	// Guards against using Dictionary method on non-dictionary variable
 	if (m_datatype != Datatypes::Dictionary)
@@ -619,7 +619,7 @@ Variable& Variable::getDictionarlyElement(std::string key)
 	return ((DictionaryValue*)m_value)->getValue(key);
 }
 
-void Variable::setDictionarlyElement(std::string key, Variable value)
+void Variable::setDictionaryElement(std::string key, Variable value)
 {
 	// Guards against using Dictionary method on non-dictionary variable
 	if (m_datatype != Datatypes::Dictionary)
@@ -632,7 +632,7 @@ void Variable::setDictionarlyElement(std::string key, Variable value)
 		throw std::logic_error("Dictionary elements are type locked to " + datatypeName(m_elementDatatype) + " datatype.");
 	}
 	// Guards against changing element value if element is value locked
-	if (getDictionarlyElement(key).m_lockMode == 2)
+	if (getDictionaryElement(key).m_lockMode == 2)
 	{
 		throw std::logic_error("Variable is constant and can not be changed while value locked.");
 	}
@@ -643,7 +643,7 @@ void Variable::setDictionarlyElement(std::string key, Variable value)
 	((DictionaryValue*)m_value)->setValue(key, value);
 }
 
-void Variable::removeDictionarlyKey(std::string key)
+void Variable::removeDictionaryKey(std::string key)
 {
 	// Guards against using Dictionary method on non-dictionary variable
 	if (m_datatype != Datatypes::Dictionary)
@@ -980,17 +980,17 @@ Variable Variable::createList(Datatypes dt, bool locked)
 	return a;
 }
 
-Variable Variable::createDictionarly()
+Variable Variable::createDictionary()
 {
 	Variable a;
-	a.makeDictionarly();
+	a.makeDictionary();
 	return a;
 }
 
-Variable Variable::createDictionarly(Datatypes dt, bool locked)
+Variable Variable::createDictionary(Datatypes dt, bool locked)
 {
 	Variable a;
-	a.makeDictionarly(dt);
+	a.makeDictionary(dt);
 	if (locked)
 	{
 		a.setLockMode(1);
@@ -1050,7 +1050,7 @@ Variable& Variable::operator[](std::string key)
 {
 	if (m_datatype == Datatypes::Dictionary)
 	{
-		return getDictionarlyElement(key);
+		return getDictionaryElement(key);
 	}
 	else
 	{
@@ -1104,7 +1104,7 @@ void Variable::operator=(const Variable& other)
 
 		for (std::string key : ((DictionaryValue*)other.m_value)->getKeys())
 		{
-			this->setDictionarlyElement(key, ((DictionaryValue*)other.m_value)->getValue(key));
+			this->setDictionaryElement(key, ((DictionaryValue*)other.m_value)->getValue(key));
 		}
 	}
 	else if (other.m_datatype == Datatypes::Stack)
