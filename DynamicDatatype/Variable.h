@@ -87,7 +87,7 @@ public:
 	// Deletes a key value pair
 	void removeDictionaryKey(std::string key);
 	// Deletes all key value pairs
-	void clearDictionarlyKeys();
+	void clearDictionaryKeys();
 
 	// Stack
 	void makeStack();

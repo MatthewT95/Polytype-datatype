@@ -653,7 +653,7 @@ void Variable::removeDictionaryKey(std::string key)
 	((DictionaryValue*)m_value)->removeKey(key);
 }
 
-void Variable::clearDictionarlyKeys()
+void Variable::clearDictionaryKeys()
 {
 	// Guards against using Dictionary method on non-dictionary variable
 	if (m_datatype != Datatypes::Dictionary)
