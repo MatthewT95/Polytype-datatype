@@ -90,14 +90,23 @@ public:
 	void clearDictionaryKeys();
 
 	// Stack
+	// Turns the Variable into an empty stack
 	void makeStack();
+	// Turns the Variable into an empty stack lock to given type
 	void makeStack(Datatypes dt);
+	// Returns a empty statck Variable
 	static Variable createStack();
+	// Returns a empty statck Variable locked to given type
 	static Variable createStack(Datatypes dt, bool locked = false);
+	// Checks if stack is empty
 	bool isStackEmpty();
+	// Returns the size of the stack
 	unsigned int stackSize();
+	// Pushes value onto stack
 	void stackPush(Variable value);
+	// Removes and returns top value from stack
 	Variable stackPop();
+	// Returns a reference to the top value on the stack
 	Variable& stackTop();
 
 	// Queue
